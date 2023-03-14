@@ -9,9 +9,11 @@ async function run(): Promise<void> {
       /^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/
     )
 
+    // eslint-disable-next-line no-console
     console.log(branch)
 
     if (!match?.groups) {
+      // eslint-disable-next-line no-console
       console.log('Invalid branch name, skipping pre-fill')
 
       return
