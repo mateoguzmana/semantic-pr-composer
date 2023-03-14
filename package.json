@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "semantic-pull-request-pre-fill",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Pre-fill a pull request description and title based on a semantic branch name",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,15 +15,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/mateoguzmana/semantic-pull-request-pre-fill.git"
   },
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "author": "",
+  "author": "Mateo Guzmán",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mateoguzmana/semantic-pull-request-pre-fill/issues"
+  },
+  "homepage": "https://github.com/mateoguzmana/semantic-pull-request-pre-fill",
   "dependencies": {
     "@actions/core": "^1.10.0"
   },
