@@ -1,11 +1,14 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: "Semantic Pull Request Pre-Fill"
+description: "Pre-fill a pull request description and title based on a semantic branch name"
 inputs:
-  milliseconds: # change this
+  branch:
+    description: "The branch name to parse"
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+outputs:
+  title:
+    description: "The title of the pull request"
+  description:
+    description: "The description of the pull request"
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/index.js"
