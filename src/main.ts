@@ -17,6 +17,9 @@ async function run(): Promise<void> {
     const ticketBaseUrl = core.getInput('ticket-base-url')
     const templateType = core.getInput('template-type')
 
+    // eslint-disable-next-line no-console
+    console.log(templateType)
+
     const branch = GITHUB_HEAD_REF
 
     const context = github.context
