@@ -8,6 +8,9 @@ async function run(): Promise<void> {
     // eslint-disable-next-line no-console
     console.log(GITHUB_HEAD_REF_SLUG_URL)
 
+    // eslint-disable-next-line no-console
+    console.log('testing')
+
     const branch = core.getInput('branch')
 
     const match = branch.match(
