@@ -1,5 +1,6 @@
 export enum TemplateType {
   Basic = 'basic',
+  // @TODO: rename this to a more generic name
   Emojis = 'emojis'
 }
 
