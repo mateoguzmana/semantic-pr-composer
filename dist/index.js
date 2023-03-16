@@ -91,12 +91,13 @@ run();
 /***/ }),
 
 /***/ 2598:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeBasicTemplate = void 0;
+const strings_1 = __nccwpck_require__(4100);
 function makeBasicTemplate({ prefix, ticket, ticketBaseUrl, description }) {
     // prettier-ignore
     return `
@@ -106,11 +107,11 @@ ${ticket ? `[${ticket}](${ticketBaseUrl}${ticket})` : 'No related issue'}
 
 ### Change Type
 
-${prefix ? `- [x] ${prefix}` : '- [ ] Change type not specified'}
+${prefix ? `- [x] ${(0, strings_1.capitalizeFirstLetter)(prefix)}` : '- [ ] Change type not specified'}
 
 ### Description
 
-${description ? description : 'No description provided.'}
+${description ? (0, strings_1.capitalizeFirstLetter)(description) : 'No description provided.'}
 
 ### Checklist
 
@@ -126,12 +127,13 @@ exports.makeBasicTemplate = makeBasicTemplate;
 /***/ }),
 
 /***/ 5173:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeConventionalTemplate = void 0;
+const strings_1 = __nccwpck_require__(4100);
 function makeConventionalTemplate({ prefix, ticket, ticketBaseUrl, description }) {
     // prettier-ignore
     return `
@@ -155,7 +157,7 @@ ${prefix === 'test' ? '- [x] :white_check_mark: Tests' : ''}
 
 ### Summary
 
-${description ? description.replace(/(?<=(?:^|[.?!])\W*)[a-z]/g, i => i.toUpperCase()) : 'No description'}
+${description ? (0, strings_1.capitalizeFirstLetter)(description) : 'No description'}
 `;
 }
 exports.makeConventionalTemplate = makeConventionalTemplate;
@@ -200,6 +202,21 @@ var TemplateType;
     TemplateType["Basic"] = "basic";
     TemplateType["Conventional"] = "conventional";
 })(TemplateType = exports.TemplateType || (exports.TemplateType = {}));
+
+
+/***/ }),
+
+/***/ 4100:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.capitalizeFirstLetter = void 0;
+function capitalizeFirstLetter(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
+exports.capitalizeFirstLetter = capitalizeFirstLetter;
 
 
 /***/ }),

@@ -1,4 +1,5 @@
 import type {TemplateProps} from './types'
+import {capitalizeFirstLetter} from '../utils/strings'
 
 export function makeConventionalTemplate({
   prefix,
@@ -28,6 +29,6 @@ ${prefix === 'test' ? '- [x] :white_check_mark: Tests' : ''}
 
 ### Summary
 
-${description ? description.replace(/(?<=(?:^|[.?!])\W*)[a-z]/g, i => i.toUpperCase()) : 'No description'}
+${description ? capitalizeFirstLetter(description) : 'No description'}
 `
 }

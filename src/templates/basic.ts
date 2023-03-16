@@ -1,4 +1,5 @@
 import type {TemplateProps} from './types'
+import {capitalizeFirstLetter} from '../utils/strings'
 
 export function makeBasicTemplate({
   prefix,
@@ -14,11 +15,11 @@ ${ticket ? `[${ticket}](${ticketBaseUrl}${ticket})` : 'No related issue'}
 
 ### Change Type
 
-${prefix ? `- [x] ${prefix}` : '- [ ] Change type not specified'}
+${prefix ? `- [x] ${capitalizeFirstLetter(prefix)}` : '- [ ] Change type not specified'}
 
 ### Description
 
-${description ? description : 'No description provided.'}
+${description ? capitalizeFirstLetter(description) : 'No description provided.'}
 
 ### Checklist
 
