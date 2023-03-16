@@ -44,7 +44,12 @@ async function run(): Promise<void> {
     const body = `
 ### Summary
       
-[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})          
+[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})        
+
+- [ ] I have added unit tests
+- [ ] I have tested my changes locally
+- [ ] I have updated the documentation
+- [ ] I have updated the changelog
     `
 
     if (github.context.payload.pull_request?.number) {

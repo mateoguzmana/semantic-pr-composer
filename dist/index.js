@@ -70,7 +70,12 @@ function run() {
             const body = `
 ### Summary
       
-[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})          
+[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})        
+
+- [ ] I have added unit tests
+- [ ] I have tested my changes locally
+- [ ] I have updated the documentation
+- [ ] I have updated the changelog
     `;
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
