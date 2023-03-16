@@ -41,7 +41,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-// import {wait} from './wait'
 function run() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
@@ -49,12 +48,12 @@ function run() {
             const { GITHUB_HEAD_REF_SLUG_URL } = process.env || {};
             // eslint-disable-next-line no-console
             console.log(GITHUB_HEAD_REF_SLUG_URL);
-            // eslint-disable-next-line no-console
-            console.log('testing');
             const branch = core.getInput('branch');
-            const context = github.context;
             const token = core.getInput('github-token');
+            const context = github.context;
             const octokit = github.getOctokit(token);
+            // eslint-disable-next-line no-console
+            console.log({ context: github.context });
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'feat(prefill): prefill test', body: 'prefill test' }));
             }

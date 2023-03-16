@@ -1,6 +1,5 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-// import {wait} from './wait'
 
 async function run(): Promise<void> {
   try {
@@ -9,15 +8,14 @@ async function run(): Promise<void> {
     // eslint-disable-next-line no-console
     console.log(GITHUB_HEAD_REF_SLUG_URL)
 
-    // eslint-disable-next-line no-console
-    console.log('testing')
-
     const branch = core.getInput('branch')
 
-    const context = github.context
-
     const token = core.getInput('github-token')
+    const context = github.context
     const octokit = github.getOctokit(token)
+
+    // eslint-disable-next-line no-console
+    console.log({context: github.context})
 
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({
