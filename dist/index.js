@@ -129,7 +129,7 @@ function makeEmojisTemplate({ prefix, ticket, ticketBaseUrl, description }) {
 
 [${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
 
-### Types of changes
+### Change Scope
 
 ${prefix === 'build' ? '- [x] :hammer: Build system changes' : ''}
 ${prefix === 'chore' ? '- [x] :building_construction: Chore changes' : ''}
