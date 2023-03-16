@@ -15,7 +15,7 @@ async function run(): Promise<void> {
     const octokit = github.getOctokit(token)
 
     // eslint-disable-next-line no-console
-    console.log({context: github.context.ref}, GITHUB_REF_NAME)
+    console.log(process.env)
 
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({
