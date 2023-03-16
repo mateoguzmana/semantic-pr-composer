@@ -40,12 +40,20 @@ async function run(): Promise<void> {
       formattedTicket ? `(${formattedTicket})` : ''
     }: ${descriptionBody}`
 
+    const body = `
+        [${formattedTicket || ''}](${
+      formattedTicket ? `${ticketBaseUrl}/${formattedTicket}` : ''
+    })
+
+              
+            `
+
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({
         ...context.repo,
         pull_number: github.context.payload.pull_request.number,
         title: pullRequestTitle,
-        body: descriptionBody
+        body
       })
     }
   } catch (error) {
