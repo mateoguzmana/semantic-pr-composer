@@ -52,13 +52,11 @@ function run() {
             // eslint-disable-next-line no-console
             console.log('testing');
             const branch = core.getInput('branch');
-            core.setOutput('title', 'test title output');
-            core.setOutput('description', 'test description output');
             const context = github.context;
             const token = core.getInput('github-token');
             const octokit = github.getOctokit(token);
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
-                yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'melongo', body: 'melongo' }));
+                yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'feat(prefill): prefill test', body: 'prefill test' }));
             }
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {

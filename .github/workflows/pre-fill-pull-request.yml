@@ -26,7 +26,7 @@ jobs:
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
 
-      - name: Test action
+      - name: Parsing branch name
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

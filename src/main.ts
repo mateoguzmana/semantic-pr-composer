@@ -14,9 +14,6 @@ async function run(): Promise<void> {
 
     const branch = core.getInput('branch')
 
-    core.setOutput('title', 'test title output')
-    core.setOutput('description', 'test description output')
-
     const context = github.context
 
     const token = core.getInput('github-token')
@@ -26,8 +23,8 @@ async function run(): Promise<void> {
       await octokit.rest.pulls.update({
         ...context.repo,
         pull_number: github.context.payload.pull_request.number,
-        title: 'melongo',
-        body: 'melongo'
+        title: 'feat(prefill): prefill test',
+        body: 'prefill test'
       })
     }
 
