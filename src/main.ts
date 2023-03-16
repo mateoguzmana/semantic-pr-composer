@@ -13,9 +13,6 @@ async function run(): Promise<void> {
 
     const ticketBaseUrl = core.getInput('ticket-base-url')
 
-    // eslint-disable-next-line no-console
-    console.log('ticketBaseUrl', ticketBaseUrl)
-
     const branch = GITHUB_HEAD_REF
 
     const token = core.getInput('github-token')
