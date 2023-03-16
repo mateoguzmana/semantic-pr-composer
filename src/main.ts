@@ -17,6 +17,13 @@ async function run(): Promise<void> {
     core.setOutput('title', 'test title output')
     core.setOutput('description', 'test description output')
 
+    await github.context.payload.pulls.update({
+      ...github.context.repo,
+      pull_number: github.context.payload.pull_request?.number,
+      title: 'melongo',
+      body: 'melongo'
+    })
+
     const match = branch.match(
       /^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/
     )

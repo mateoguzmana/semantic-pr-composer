@@ -43,7 +43,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 // import {wait} from './wait'
 function run() {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { GITHUB_HEAD_REF_SLUG_URL } = process.env || {};
@@ -54,6 +54,7 @@ function run() {
             const branch = core.getInput('branch');
             core.setOutput('title', 'test title output');
             core.setOutput('description', 'test description output');
+            yield github.context.payload.pulls.update(Object.assign(Object.assign({}, github.context.repo), { pull_number: (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number, title: 'melongo', body: 'melongo' }));
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
                 // eslint-disable-next-line no-console
@@ -71,7 +72,7 @@ function run() {
             core.info(new Date().toTimeString());
             core.setOutput('title', pullRequestTitle);
             core.setOutput('description', descriptionBody);
-            yield github.context.payload.pulls.update(Object.assign(Object.assign({}, github.context.repo), { pull_number: (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number, title: pullRequestTitle, body: descriptionBody }));
+            yield github.context.payload.pulls.update(Object.assign(Object.assign({}, github.context.repo), { pull_number: (_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.number, title: pullRequestTitle, body: descriptionBody }));
         }
         catch (error) {
             if (error instanceof Error)
