@@ -43,7 +43,8 @@ async function run(): Promise<void> {
     // await wait(parseInt(ms));
     core.info(new Date().toTimeString())
 
-    core.setOutput('time', new Date().toTimeString())
+    core.setOutput('title', pullRequestTitle)
+    core.setOutput('description', descriptionBody)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

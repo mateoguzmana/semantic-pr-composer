@@ -38,6 +38,8 @@ jobs:
           script: |
             const inputs = context.payload.pull_request;
 
+            console.log(process.env)
+
             const result = await github.pulls.update({
               ...context.repo,
               pull_number: inputs.number,
