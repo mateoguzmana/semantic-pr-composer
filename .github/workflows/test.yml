@@ -32,6 +32,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const inputs = context.payload.pull_request;
+
             const result = await github.pulls.update({
               ...context.repo,
               pull_number: inputs.number,
