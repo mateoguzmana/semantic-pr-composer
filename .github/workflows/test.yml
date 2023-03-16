@@ -23,4 +23,4 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
       - uses: ./
         with:
-          branch: 'feat/xxx-000-test'
+          branch: 'feat/xxx-000-test2'
