@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 function run() {
-    var _a, _b;
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { GITHUB_HEAD_REF } = process.env || {};
@@ -52,9 +52,6 @@ function run() {
             const token = core.getInput('github-token');
             const context = github.context;
             const octokit = github.getOctokit(token);
-            if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
-                yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'feat(prefill): prefill test', body: 'prefill test' }));
-            }
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\/(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
                 core.info('Invalid branch name, skipping pre-fill');
@@ -64,11 +61,9 @@ function run() {
             const descriptionBody = title.replace(/-/g, ' ');
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
             const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`;
-            core.info(`Branch name: ${branch}`);
-            core.info(`Pull request title: ${pullRequestTitle}`);
-            core.setOutput('title', pullRequestTitle);
-            core.setOutput('description', descriptionBody);
-            yield github.context.payload.pulls.update(Object.assign(Object.assign({}, github.context.repo), { pull_number: (_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.number, title: pullRequestTitle, body: descriptionBody }));
+            if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
+                yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body: descriptionBody }));
+            }
         }
         catch (error) {
             if (error instanceof Error)
