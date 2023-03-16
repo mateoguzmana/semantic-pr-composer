@@ -42,7 +42,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const templates_1 = __nccwpck_require__(1429);
-const types_1 = __nccwpck_require__(3779);
 function run() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -52,9 +51,10 @@ function run() {
                 core.info('No branch name, skipping pre-fill');
                 return;
             }
-            const ticketBaseUrl = core.getInput('ticket-base-url');
-            const branch = GITHUB_HEAD_REF;
             const token = core.getInput('github-token');
+            const ticketBaseUrl = core.getInput('ticket-base-url');
+            const templateType = core.getInput('template-type');
+            const branch = GITHUB_HEAD_REF;
             const context = github.context;
             const octokit = github.getOctokit(token);
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\/(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
@@ -65,11 +65,15 @@ function run() {
             const { prefix, ticket, title } = match.groups;
             const descriptionBody = title.replace(/-/g, ' ');
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
+            // @TODO: Add support for a dynamic title, using a regex to replace depending on the desired format
+            // prettier-ignore
             const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`;
             const body = (0, templates_1.makeTemplate)({
+                prefix,
                 ticket: formattedTicket,
                 ticketBaseUrl,
-                type: types_1.TemplateType.Basic
+                description: descriptionBody,
+                type: templateType
             });
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
@@ -98,7 +102,7 @@ function makeBasicTemplate({ ticket, ticketBaseUrl }) {
     return `
 ### Summary
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})        
+[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
 
 - [ ] I have added unit tests
 - [ ] I have tested my changes locally
@@ -107,6 +111,44 @@ function makeBasicTemplate({ ticket, ticketBaseUrl }) {
 `;
 }
 exports.makeBasicTemplate = makeBasicTemplate;
+
+
+/***/ }),
+
+/***/ 549:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.makeEmojisTemplate = void 0;
+function makeEmojisTemplate({ prefix, ticket, ticketBaseUrl, description }) {
+    // prettier-ignore
+    return `
+### Related issue
+
+[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
+
+### Types of changes
+
+${prefix === 'build' ? '- [x] :hammer: Build system changes' : ''}
+${prefix === 'chore' ? '- [x] :building_construction: Chore changes' : ''}
+${prefix === 'ci' ? '- [x] :construction_worker: CI changes' : ''}
+${prefix === 'docs' ? '- [x] :memo: Documentation changes' : ''}
+${prefix === 'feat' ? '- [x] :sparkles: New feature' : ''}
+${prefix === 'fix' ? '- [x] :bug: Bug fix' : ''}
+${prefix === 'perf' ? '- [x] :zap: Performance improvements' : ''}
+${prefix === 'refactor' ? '- [x] :recycle: Code refactor' : ''}
+${prefix === 'revert' ? '- [x] :rewind: Revert changes' : ''}
+${prefix === 'style' ? '- [x] :art: Code style changes' : ''}
+${prefix === 'test' ? '- [x] :white_check_mark: Tests' : ''}
+
+### Summary
+
+${description}
+`;
+}
+exports.makeEmojisTemplate = makeEmojisTemplate;
 
 
 /***/ }),
@@ -120,10 +162,13 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeTemplate = void 0;
 const types_1 = __nccwpck_require__(3779);
 const basic_1 = __nccwpck_require__(2598);
+const emojis_1 = __nccwpck_require__(549);
 function makeTemplate(props) {
     switch (props.type) {
         case types_1.TemplateType.Basic:
             return (0, basic_1.makeBasicTemplate)(props);
+        case types_1.TemplateType.Emojis:
+            return (0, emojis_1.makeEmojisTemplate)(props);
         default:
             return (0, basic_1.makeBasicTemplate)(props);
     }
@@ -142,7 +187,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TemplateType = void 0;
 var TemplateType;
 (function (TemplateType) {
-    TemplateType["Basic"] = "basic";
+    TemplateType["Basic"] = "Basic";
+    // @TODO: rename this to a more generic name
+    TemplateType["Emojis"] = "Emojis";
 })(TemplateType = exports.TemplateType || (exports.TemplateType = {}));
 
 
