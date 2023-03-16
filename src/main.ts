@@ -41,8 +41,10 @@ async function run(): Promise<void> {
     const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`
 
     const body = makeTemplate({
+      prefix,
       ticket: formattedTicket,
       ticketBaseUrl,
+      description: descriptionBody,
       type: TemplateType.Basic
     })
 
