@@ -19,8 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
       - uses: ./
         with:
           branch: 'feat/xxx-000-test'
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v3.x

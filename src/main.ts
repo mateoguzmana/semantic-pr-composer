@@ -15,7 +15,7 @@ async function run(): Promise<void> {
     )
 
     // eslint-disable-next-line no-console
-    console.log(branch)
+    console.log(branch, 'ignore')
 
     if (!match?.groups) {
       // eslint-disable-next-line no-console
