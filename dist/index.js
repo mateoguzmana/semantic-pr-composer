@@ -68,7 +68,7 @@ function run() {
             const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`;
             // prettier-ignore
             const body = `
-        [${formattedTicket || ''}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})          
+        [${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})          
     `;
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
