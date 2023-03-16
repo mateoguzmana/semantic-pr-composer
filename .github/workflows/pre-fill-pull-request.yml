@@ -1,5 +1,5 @@
 name: Pre-fill Pull Request
-on: # rebuild any PRs and main branch changes
+on:
   pull_request:
   push:
     branches:
@@ -11,7 +11,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  build: # make sure build/ci work properly
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,9 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # - name: Inject slug/short variables
-      #   uses: rlespinasse/github-slug-action@v3.x
-
       - name: Parsing branch name
         uses: ./
         with:
