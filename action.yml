@@ -1,6 +1,9 @@
 name: 'Semantic Pull Request Pre-Fill'
 description: 'Pre-fill a pull request description and title based on a semantic branch name'
 inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
   ticket-base-url:
     description: 'Base URL for the ticket system'
     required: false
