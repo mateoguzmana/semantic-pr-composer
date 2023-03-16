@@ -1,6 +1,6 @@
 import type {TemplateProps} from './types'
 
-export function makeEmojisTemplate({
+export function makeConventionalTemplate({
   prefix,
   ticket,
   ticketBaseUrl,

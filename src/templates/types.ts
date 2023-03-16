@@ -1,7 +1,6 @@
 export enum TemplateType {
-  Basic = 'Basic',
-  // @TODO: rename this to a more generic name
-  Emojis = 'Emojis'
+  Basic = 'basic',
+  Conventional = 'conventional'
 }
 
 export interface TemplateProps {

@@ -1,14 +1,14 @@
 import {TemplateProps, TemplateType} from './types'
 
 import {makeBasicTemplate} from './basic'
-import {makeEmojisTemplate} from './emojis'
+import {makeConventionalTemplate} from './conventional'
 
 export function makeTemplate(props: TemplateProps): string {
   switch (props.type) {
     case TemplateType.Basic:
       return makeBasicTemplate(props)
-    case TemplateType.Emojis:
-      return makeEmojisTemplate(props)
+    case TemplateType.Conventional:
+      return makeConventionalTemplate(props)
     default:
       return makeBasicTemplate(props)
   }
