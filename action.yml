@@ -1,14 +1,12 @@
-name: "Semantic Pull Request Pre-Fill"
-description: "Pre-fill a pull request description and title based on a semantic branch name"
+name: 'Semantic Pull Request Pre-Fill'
+description: 'Pre-fill a pull request description and title based on a semantic branch name'
 inputs:
-  branch:
-    description: "The branch name to parse"
+  github-token:
+    description: 'GitHub token'
     required: true
-outputs:
-  title:
-    description: "The title of the pull request"
-  description:
-    description: "The description of the pull request"
+  ticket-base-url:
+    description: 'Base URL for the ticket system'
+    required: false
 runs:
-  using: "node16"
-  main: "dist/index.js"
+  using: 'node16'
+  main: 'dist/index.js'

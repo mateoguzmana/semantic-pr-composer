@@ -11,6 +11,8 @@ async function run(): Promise<void> {
       return
     }
 
+    const ticketBaseUrl = core.getInput('ticket-base-url')
+
     const branch = GITHUB_HEAD_REF
 
     const token = core.getInput('github-token')
@@ -35,12 +37,24 @@ async function run(): Promise<void> {
       formattedTicket ? `(${formattedTicket})` : ''
     }: ${descriptionBody}`
 
+    // prettier-ignore
+    const body = `
+### Summary
+      
+[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})        
+
+- [ ] I have added unit tests
+- [ ] I have tested my changes locally
+- [ ] I have updated the documentation
+- [ ] I have updated the changelog
+    `
+
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({
         ...context.repo,
         pull_number: github.context.payload.pull_request.number,
         title: pullRequestTitle,
-        body: descriptionBody
+        body
       })
     }
   } catch (error) {

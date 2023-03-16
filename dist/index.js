@@ -50,6 +50,7 @@ function run() {
                 core.info('No branch name, skipping pre-fill');
                 return;
             }
+            const ticketBaseUrl = core.getInput('ticket-base-url');
             const branch = GITHUB_HEAD_REF;
             const token = core.getInput('github-token');
             const context = github.context;
@@ -63,8 +64,19 @@ function run() {
             const descriptionBody = title.replace(/-/g, ' ');
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
             const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`;
+            // prettier-ignore
+            const body = `
+### Summary
+      
+[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})        
+
+- [ ] I have added unit tests
+- [ ] I have tested my changes locally
+- [ ] I have updated the documentation
+- [ ] I have updated the changelog
+    `;
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
-                yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body: descriptionBody }));
+                yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
             }
         }
         catch (error) {

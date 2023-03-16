@@ -27,4 +27,4 @@ jobs:
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          branch: 'feat/xxx-000-test2'
+          ticket-base-url: 'https://trello.com/c/SMTbdsor/'
