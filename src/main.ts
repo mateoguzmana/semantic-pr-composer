@@ -3,12 +3,15 @@ import * as github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
-    const {GITHUB_HEAD_REF} = process.env || {}
+    const {GITHUB_HEAD_REF} = process.env
 
-    // eslint-disable-next-line no-console
-    console.log(GITHUB_HEAD_REF)
+    if (!GITHUB_HEAD_REF) {
+      core.info('No branch name, skipping pre-fill')
 
-    const branch = core.getInput('branch')
+      return
+    }
+
+    const branch = GITHUB_HEAD_REF
 
     const token = core.getInput('github-token')
     const context = github.context

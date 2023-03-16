@@ -45,10 +45,12 @@ function run() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { GITHUB_HEAD_REF } = process.env || {};
-            // eslint-disable-next-line no-console
-            console.log(GITHUB_HEAD_REF);
-            const branch = core.getInput('branch');
+            const { GITHUB_HEAD_REF } = process.env;
+            if (!GITHUB_HEAD_REF) {
+                core.info('No branch name, skipping pre-fill');
+                return;
+            }
+            const branch = GITHUB_HEAD_REF;
             const token = core.getInput('github-token');
             const context = github.context;
             const octokit = github.getOctokit(token);
