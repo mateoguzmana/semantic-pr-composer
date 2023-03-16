@@ -28,7 +28,7 @@ async function run(): Promise<void> {
     )
 
     if (!match?.groups) {
-      core.setFailed('Invalid branch name, skipping pre-fill')
+      core.info('Invalid branch name, skipping pre-fill')
 
       return
     }

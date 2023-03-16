@@ -57,7 +57,7 @@ function run() {
             }
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
-                core.setFailed('Invalid branch name, skipping pre-fill');
+                core.info('Invalid branch name, skipping pre-fill');
                 return;
             }
             const { prefix, ticket, title } = match.groups;
