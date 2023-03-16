@@ -28,6 +28,6 @@ ${prefix === 'test' ? '- [x] :white_check_mark: Tests' : ''}
 
 ### Summary
 
-${description}
+${description ? description.replace(/(?<=(?:^|[.?!])\W*)[a-z]/g, i => i.toUpperCase()) : 'No description'}
 `
 }
