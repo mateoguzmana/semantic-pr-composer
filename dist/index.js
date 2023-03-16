@@ -91,23 +91,33 @@ run();
 /***/ }),
 
 /***/ 2598:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeBasicTemplate = void 0;
-function makeBasicTemplate({ ticket, ticketBaseUrl }) {
+const strings_1 = __nccwpck_require__(4100);
+function makeBasicTemplate({ prefix, ticket, ticketBaseUrl, description }) {
     // prettier-ignore
     return `
-### Summary
+### Related Issue
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
+${ticket ? `[${ticket}](${ticketBaseUrl}${ticket})` : 'No related issue'}
 
-- [ ] I have added unit tests
-- [ ] I have tested my changes locally
-- [ ] I have updated the documentation
-- [ ] I have updated the changelog
+### Change Type
+
+${prefix ? `- [x] ${(0, strings_1.capitalizeFirstLetter)(prefix)}` : '- [ ] Change type not specified'}
+
+### Description
+
+${description ? (0, strings_1.capitalizeFirstLetter)(description) : 'No description provided.'}
+
+### Checklist
+
+- [ ] New features are documented
+- [ ] Bug fixes include a test case to prevent regression
+- [ ] Changes have been reviewed by at least one other team member or maintainer
 `;
 }
 exports.makeBasicTemplate = makeBasicTemplate;
@@ -115,14 +125,15 @@ exports.makeBasicTemplate = makeBasicTemplate;
 
 /***/ }),
 
-/***/ 549:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ 5173:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.makeEmojisTemplate = void 0;
-function makeEmojisTemplate({ prefix, ticket, ticketBaseUrl, description }) {
+exports.makeConventionalTemplate = void 0;
+const strings_1 = __nccwpck_require__(4100);
+function makeConventionalTemplate({ prefix, ticket, ticketBaseUrl, description }) {
     // prettier-ignore
     return `
 ### Related issue
@@ -145,10 +156,16 @@ ${prefix === 'test' ? '- [x] :white_check_mark: Tests' : ''}
 
 ### Summary
 
-${description ? description.replace(/(?<=(?:^|[.?!])\W*)[a-z]/g, i => i.toUpperCase()) : 'No description'}
+${description ? (0, strings_1.capitalizeFirstLetter)(description) : 'No description'}
+
+### Checklist
+
+- [ ] New features are documented
+- [ ] Bug fixes include a test case to prevent regression
+- [ ] Changes have been reviewed by at least one other team member or maintainer
 `;
 }
-exports.makeEmojisTemplate = makeEmojisTemplate;
+exports.makeConventionalTemplate = makeConventionalTemplate;
 
 
 /***/ }),
@@ -162,13 +179,13 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeTemplate = void 0;
 const types_1 = __nccwpck_require__(3779);
 const basic_1 = __nccwpck_require__(2598);
-const emojis_1 = __nccwpck_require__(549);
+const conventional_1 = __nccwpck_require__(5173);
 function makeTemplate(props) {
     switch (props.type) {
         case types_1.TemplateType.Basic:
             return (0, basic_1.makeBasicTemplate)(props);
-        case types_1.TemplateType.Emojis:
-            return (0, emojis_1.makeEmojisTemplate)(props);
+        case types_1.TemplateType.Conventional:
+            return (0, conventional_1.makeConventionalTemplate)(props);
         default:
             return (0, basic_1.makeBasicTemplate)(props);
     }
@@ -187,10 +204,24 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TemplateType = void 0;
 var TemplateType;
 (function (TemplateType) {
-    TemplateType["Basic"] = "Basic";
-    // @TODO: rename this to a more generic name
-    TemplateType["Emojis"] = "Emojis";
+    TemplateType["Basic"] = "basic";
+    TemplateType["Conventional"] = "conventional";
 })(TemplateType = exports.TemplateType || (exports.TemplateType = {}));
+
+
+/***/ }),
+
+/***/ 4100:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.capitalizeFirstLetter = void 0;
+function capitalizeFirstLetter(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
+exports.capitalizeFirstLetter = capitalizeFirstLetter;
 
 
 /***/ }),

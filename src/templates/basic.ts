@@ -1,18 +1,30 @@
 import type {TemplateProps} from './types'
+import {capitalizeFirstLetter} from '../utils/strings'
 
 export function makeBasicTemplate({
+  prefix,
   ticket,
-  ticketBaseUrl
+  ticketBaseUrl,
+  description
 }: TemplateProps): string {
   // prettier-ignore
   return `
-### Summary
+### Related Issue
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
+${ticket ? `[${ticket}](${ticketBaseUrl}${ticket})` : 'No related issue'}
 
-- [ ] I have added unit tests
-- [ ] I have tested my changes locally
-- [ ] I have updated the documentation
-- [ ] I have updated the changelog
+### Change Type
+
+${prefix ? `- [x] ${capitalizeFirstLetter(prefix)}` : '- [ ] Change type not specified'}
+
+### Description
+
+${description ? capitalizeFirstLetter(description) : 'No description provided.'}
+
+### Checklist
+
+- [ ] New features are documented
+- [ ] Bug fixes include a test case to prevent regression
+- [ ] Changes have been reviewed by at least one other team member or maintainer
 `
 }

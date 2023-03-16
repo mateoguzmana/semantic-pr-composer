@@ -1,6 +1,7 @@
 import type {TemplateProps} from './types'
+import {capitalizeFirstLetter} from '../utils/strings'
 
-export function makeEmojisTemplate({
+export function makeConventionalTemplate({
   prefix,
   ticket,
   ticketBaseUrl,
@@ -28,6 +29,12 @@ ${prefix === 'test' ? '- [x] :white_check_mark: Tests' : ''}
 
 ### Summary
 
-${description ? description.replace(/(?<=(?:^|[.?!])\W*)[a-z]/g, i => i.toUpperCase()) : 'No description'}
+${description ? capitalizeFirstLetter(description) : 'No description'}
+
+### Checklist
+
+- [ ] New features are documented
+- [ ] Bug fixes include a test case to prevent regression
+- [ ] Changes have been reviewed by at least one other team member or maintainer
 `
 }
