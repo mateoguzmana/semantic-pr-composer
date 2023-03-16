@@ -32,21 +32,21 @@ jobs:
           branch: 'feat/xxx-000-test2'
         id: abc
 
-      - name: Set the pull request title and description
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const inputs = context.payload.pull_request;
+      # - name: Set the pull request title and description
+      #   uses: actions/github-script@v3
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       const inputs = context.payload.pull_request;
 
-            console.log(`
-              ${{steps.abc.outputs.TITLE}}
-              ${{steps.abc.outputs.DESCRIPTION}}
-            `)
+      #       console.log(`
+      #         ${{steps.abc.outputs.TITLE}}
+      #         ${{steps.abc.outputs.DESCRIPTION}}
+      #       `)
 
-            const result = await github.pulls.update({
-              ...context.repo,
-              pull_number: inputs.number,
-              title: '@TODO: output title',
-              body: 'TODO: output body'
-            });
+      #       const result = await github.pulls.update({
+      #         ...context.repo,
+      #         pull_number: inputs.number,
+      #         title: '@TODO: output title',
+      #         body: 'TODO: output body'
+      #       });

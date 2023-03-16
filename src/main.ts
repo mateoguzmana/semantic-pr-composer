@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 // import {wait} from './wait'
 
 async function run(): Promise<void> {
@@ -48,6 +49,13 @@ async function run(): Promise<void> {
 
     core.setOutput('title', pullRequestTitle)
     core.setOutput('description', descriptionBody)
+
+    await github.context.payload.pulls.update({
+      ...github.context.repo,
+      pull_number: github.context.payload.pull_request?.number,
+      title: pullRequestTitle,
+      body: descriptionBody
+    })
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
