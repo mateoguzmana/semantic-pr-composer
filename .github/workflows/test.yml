@@ -24,3 +24,81 @@ jobs:
       - uses: ./
         with:
           branch: 'feat/xxx-000-test2'
+      - name: Set the pull request title and description
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            function capitalizeFirstLetter(string) {
+              return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
+            const { GITHUB_HEAD_REF_SLUG_URL } = process.env;
+            const inputs = context.payload.pull_request;
+
+            const allowPrefilling = inputs.body.includes('This PR can be pre-filled automatically');
+            const isAlreadyPrefilled = inputs.body.includes('This PR was pre-filled automatically');
+
+            if (isAlreadyPrefilled) {
+              console.log("PR already pre-filled, skipping");
+
+              return;
+            }
+
+            if (!isAlreadyPrefilled && !allowPrefilling) {
+              console.log("The user does not want to pre-fill, skipping");
+
+              return;
+            }
+
+            const branchName = `${GITHUB_HEAD_REF_SLUG_URL}`;
+            const match = branchName.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(web|vavo|favo|pay)-[0-9]*)?-?(?<title>.*)$/);
+
+            if (!match) {
+              console.log("Invalid branch name, skipping pre-fill");
+
+              return;
+            };
+
+            const { prefix, ticket, title } = match.groups;
+
+            const descriptionBody = title.replace(/-/g, ' ');
+            const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
+            const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`;
+
+            const description = `
+              ### Ticket:
+
+              [${formattedTicket || 'No ticket'}](${formattedTicket ? `https://app.clickup.com/t/2566449/${formattedTicket}` : ''})
+
+              ### Types of changes
+
+              ${prefix === 'feature' || prefix === 'feat' ? '- [x] :sparkles: New feature' : ''}
+              ${prefix === 'bugfix' || prefix === 'fix' ? '- [x] :bug: Bug fix' : ''}
+              ${prefix === 'hotfix' ? '- [x] :ambulance: Hotfix' : ''}
+              ${prefix === 'chore' ? '- [x] :building_construction: Chore changes' : ''}
+              ${prefix === 'patch' ? '- [x] :bug: Patch' : ''}
+              ${prefix === 'release' ? '- [x] :bookmark: Release' : ''}
+              ${prefix === 'refactor' ? '- [x] :art: Refactor' : ''}
+              
+              ### Description
+
+              ${capitalizeFirstLetter(descriptionBody)}
+
+              ### Screenshots (if needed)
+
+              | Dark Mode  | Light Mode |
+              | ---------- | ---------- |
+              |            |            |
+
+              ---
+
+              _This PR was pre-filled automatically. If you want to change the title or description, please edit the PR body._
+            `;
+
+            const result = await github.pulls.update({
+              ...context.repo,
+              pull_number: inputs.number,
+              title: pullRequestTitle,
+              body: description
+            });
