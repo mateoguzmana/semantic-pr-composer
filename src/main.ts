@@ -7,6 +7,9 @@ async function run(): Promise<void> {
   try {
     const {GITHUB_HEAD_REF} = process.env
 
+    // eslint-disable-next-line no-console
+    console.log(GITHUB_HEAD_REF)
+
     if (!GITHUB_HEAD_REF) {
       core.info('No branch name, skipping pre-fill')
 
