@@ -40,13 +40,10 @@ async function run(): Promise<void> {
       formattedTicket ? `(${formattedTicket})` : ''
     }: ${descriptionBody}`
 
+    // prettier-ignore
     const body = `
-        [${formattedTicket || ''}](${
-      formattedTicket ? `${ticketBaseUrl}/${formattedTicket}` : ''
-    })
-
-              
-            `
+        [${formattedTicket || ''}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})          
+    `
 
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({
