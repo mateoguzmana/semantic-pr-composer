@@ -41,27 +41,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-// import {wait} from './wait'
 function run() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { GITHUB_HEAD_REF_SLUG_URL } = process.env || {};
+            const { GITHUB_HEAD_REF } = process.env || {};
             // eslint-disable-next-line no-console
-            console.log(GITHUB_HEAD_REF_SLUG_URL);
-            // eslint-disable-next-line no-console
-            console.log('testing');
+            console.log(GITHUB_HEAD_REF);
             const branch = core.getInput('branch');
-            const context = github.context;
             const token = core.getInput('github-token');
+            const context = github.context;
             const octokit = github.getOctokit(token);
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'feat(prefill): prefill test', body: 'prefill test' }));
             }
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
-                // eslint-disable-next-line no-console
-                console.log('Invalid branch name, skipping pre-fill', GITHUB_HEAD_REF_SLUG_URL, 'nothign');
+                core.info('Invalid branch name, skipping pre-fill');
                 return;
             }
             const { prefix, ticket, title } = match.groups;

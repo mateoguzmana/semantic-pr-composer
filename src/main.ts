@@ -1,22 +1,17 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-// import {wait} from './wait'
 
 async function run(): Promise<void> {
   try {
-    const {GITHUB_HEAD_REF_SLUG_URL} = process.env || {}
+    const {GITHUB_HEAD_REF} = process.env || {}
 
     // eslint-disable-next-line no-console
-    console.log(GITHUB_HEAD_REF_SLUG_URL)
-
-    // eslint-disable-next-line no-console
-    console.log('testing')
+    console.log(GITHUB_HEAD_REF)
 
     const branch = core.getInput('branch')
 
-    const context = github.context
-
     const token = core.getInput('github-token')
+    const context = github.context
     const octokit = github.getOctokit(token)
 
     if (github.context.payload.pull_request?.number) {
@@ -33,12 +28,7 @@ async function run(): Promise<void> {
     )
 
     if (!match?.groups) {
-      // eslint-disable-next-line no-console
-      console.log(
-        'Invalid branch name, skipping pre-fill',
-        GITHUB_HEAD_REF_SLUG_URL,
-        'nothign'
-      )
+      core.info('Invalid branch name, skipping pre-fill')
 
       return
     }

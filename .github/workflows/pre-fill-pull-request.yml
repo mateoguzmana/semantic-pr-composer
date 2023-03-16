@@ -23,8 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v3.x
+      # - name: Inject slug/short variables
+      #   uses: rlespinasse/github-slug-action@v3.x
 
       - name: Parsing branch name
         uses: ./
