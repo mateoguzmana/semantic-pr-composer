@@ -54,7 +54,12 @@ function run() {
             const branch = core.getInput('branch');
             core.setOutput('title', 'test title output');
             core.setOutput('description', 'test description output');
-            yield github.context.payload.pulls.update(Object.assign(Object.assign({}, github.context.repo), { pull_number: (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number, title: 'melongo', body: 'melongo' }));
+            const context = github.context;
+            const myToken = core.getInput('github-token');
+            const octokit = github.getOctokit(myToken);
+            if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
+                yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'melongo', body: 'melongo' }));
+            }
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
                 // eslint-disable-next-line no-console
@@ -67,9 +72,6 @@ function run() {
             const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`;
             core.info(`Branch name: ${branch}`);
             core.info(`Pull request title: ${pullRequestTitle}`);
-            core.debug(new Date().toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-            // await wait(parseInt(ms));
-            core.info(new Date().toTimeString());
             core.setOutput('title', pullRequestTitle);
             core.setOutput('description', descriptionBody);
             yield github.context.payload.pulls.update(Object.assign(Object.assign({}, github.context.repo), { pull_number: (_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.number, title: pullRequestTitle, body: descriptionBody }));

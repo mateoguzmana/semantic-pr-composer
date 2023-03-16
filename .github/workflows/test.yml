@@ -29,6 +29,7 @@ jobs:
       - name: Test action
         uses: ./
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           branch: 'feat/xxx-000-test2'
         id: abc
 

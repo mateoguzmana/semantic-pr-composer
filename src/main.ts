@@ -17,12 +17,19 @@ async function run(): Promise<void> {
     core.setOutput('title', 'test title output')
     core.setOutput('description', 'test description output')
 
-    await github.context.payload.pulls.update({
-      ...github.context.repo,
-      pull_number: github.context.payload.pull_request?.number,
-      title: 'melongo',
-      body: 'melongo'
-    })
+    const context = github.context
+
+    const myToken = core.getInput('github-token')
+    const octokit = github.getOctokit(myToken)
+
+    if (github.context.payload.pull_request?.number) {
+      await octokit.rest.pulls.update({
+        ...context.repo,
+        pull_number: github.context.payload.pull_request.number,
+        title: 'melongo',
+        body: 'melongo'
+      })
+    }
 
     const match = branch.match(
       /^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/
@@ -49,10 +56,6 @@ async function run(): Promise<void> {
 
     core.info(`Branch name: ${branch}`)
     core.info(`Pull request title: ${pullRequestTitle}`)
-
-    core.debug(new Date().toTimeString()) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    // await wait(parseInt(ms));
-    core.info(new Date().toTimeString())
 
     core.setOutput('title', pullRequestTitle)
     core.setOutput('description', descriptionBody)
