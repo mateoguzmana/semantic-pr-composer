@@ -50,6 +50,8 @@ function run() {
             // eslint-disable-next-line no-console
             console.log('testing');
             const branch = core.getInput('branch');
+            core.setOutput('title', 'test title output');
+            core.setOutput('description', 'test description output');
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
                 // eslint-disable-next-line no-console

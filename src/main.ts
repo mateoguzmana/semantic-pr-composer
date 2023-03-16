@@ -13,6 +13,9 @@ async function run(): Promise<void> {
 
     const branch = core.getInput('branch')
 
+    core.setOutput('title', 'test title output')
+    core.setOutput('description', 'test description output')
+
     const match = branch.match(
       /^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/
     )
