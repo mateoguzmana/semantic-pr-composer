@@ -97,17 +97,27 @@ run();
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeBasicTemplate = void 0;
-function makeBasicTemplate({ ticket, ticketBaseUrl }) {
+function makeBasicTemplate({ prefix, ticket, ticketBaseUrl, description }) {
     // prettier-ignore
     return `
-### Summary
+### Related Issue
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
+${ticket ? `[${ticket}](${ticketBaseUrl}${ticket})` : 'No related issue'}
 
-- [ ] I have added unit tests
-- [ ] I have tested my changes locally
-- [ ] I have updated the documentation
-- [ ] I have updated the changelog
+### Change Type
+
+${prefix ? `- [x] ${prefix}` : '- [ ] Change type not specified'}
+
+### Description
+
+${description ? description : 'No description provided.'}
+
+### Checklist
+
+- [ ] New features are documented
+- [ ] Bug fixes include a test case to prevent regression
+- [ ] Changes have been reviewed by at least one other team member
+- [ ] Pull request has been approved by a team lead or maintainer
 `;
 }
 exports.makeBasicTemplate = makeBasicTemplate;
@@ -115,14 +125,14 @@ exports.makeBasicTemplate = makeBasicTemplate;
 
 /***/ }),
 
-/***/ 549:
+/***/ 5173:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.makeEmojisTemplate = void 0;
-function makeEmojisTemplate({ prefix, ticket, ticketBaseUrl, description }) {
+exports.makeConventionalTemplate = void 0;
+function makeConventionalTemplate({ prefix, ticket, ticketBaseUrl, description }) {
     // prettier-ignore
     return `
 ### Related issue
@@ -148,7 +158,7 @@ ${prefix === 'test' ? '- [x] :white_check_mark: Tests' : ''}
 ${description ? description.replace(/(?<=(?:^|[.?!])\W*)[a-z]/g, i => i.toUpperCase()) : 'No description'}
 `;
 }
-exports.makeEmojisTemplate = makeEmojisTemplate;
+exports.makeConventionalTemplate = makeConventionalTemplate;
 
 
 /***/ }),
@@ -162,13 +172,13 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeTemplate = void 0;
 const types_1 = __nccwpck_require__(3779);
 const basic_1 = __nccwpck_require__(2598);
-const emojis_1 = __nccwpck_require__(549);
+const conventional_1 = __nccwpck_require__(5173);
 function makeTemplate(props) {
     switch (props.type) {
         case types_1.TemplateType.Basic:
             return (0, basic_1.makeBasicTemplate)(props);
-        case types_1.TemplateType.Emojis:
-            return (0, emojis_1.makeEmojisTemplate)(props);
+        case types_1.TemplateType.Conventional:
+            return (0, conventional_1.makeConventionalTemplate)(props);
         default:
             return (0, basic_1.makeBasicTemplate)(props);
     }
@@ -187,9 +197,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TemplateType = void 0;
 var TemplateType;
 (function (TemplateType) {
-    TemplateType["Basic"] = "Basic";
-    // @TODO: rename this to a more generic name
-    TemplateType["Emojis"] = "Emojis";
+    TemplateType["Basic"] = "basic";
+    TemplateType["Conventional"] = "conventional";
 })(TemplateType = exports.TemplateType || (exports.TemplateType = {}));
 
 
