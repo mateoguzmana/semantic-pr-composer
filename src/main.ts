@@ -16,7 +16,10 @@ async function run(): Promise<void> {
 
     if (!match?.groups) {
       // eslint-disable-next-line no-console
-      console.log('Invalid branch name, skipping pre-fill')
+      console.log(
+        'Invalid branch name, skipping pre-fill',
+        GITHUB_HEAD_REF_SLUG_URL
+      )
 
       return
     }
