@@ -1,5 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import {makeTemplate} from './templates'
+import {TemplateType} from './templates/types'
 
 async function run(): Promise<void> {
   try {
@@ -37,17 +39,11 @@ async function run(): Promise<void> {
       formattedTicket ? `(${formattedTicket})` : ''
     }: ${descriptionBody}`
 
-    // prettier-ignore
-    const body = `
-### Summary
-      
-[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})        
-
-- [ ] I have added unit tests
-- [ ] I have tested my changes locally
-- [ ] I have updated the documentation
-- [ ] I have updated the changelog
-    `
+    const body = makeTemplate({
+      ticket: formattedTicket,
+      ticketBaseUrl,
+      type: TemplateType.Basic
+    })
 
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({

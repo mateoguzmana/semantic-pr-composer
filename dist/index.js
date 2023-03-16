@@ -41,6 +41,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+const templates_1 = __nccwpck_require__(1429);
+const types_1 = __nccwpck_require__(3779);
 function run() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -64,17 +66,11 @@ function run() {
             const descriptionBody = title.replace(/-/g, ' ');
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
             const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`;
-            // prettier-ignore
-            const body = `
-### Summary
-      
-[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})        
-
-- [ ] I have added unit tests
-- [ ] I have tested my changes locally
-- [ ] I have updated the documentation
-- [ ] I have updated the changelog
-    `;
+            const body = (0, templates_1.makeTemplate)({
+                ticket: formattedTicket,
+                ticketBaseUrl,
+                type: types_1.TemplateType.Basic
+            });
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
             }
@@ -86,6 +82,68 @@ function run() {
     });
 }
 run();
+
+
+/***/ }),
+
+/***/ 2598:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.makeBasicTemplate = void 0;
+function makeBasicTemplate({ ticket, ticketBaseUrl }) {
+    // prettier-ignore
+    return `
+### Summary
+
+[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})        
+
+- [ ] I have added unit tests
+- [ ] I have tested my changes locally
+- [ ] I have updated the documentation
+- [ ] I have updated the changelog
+`;
+}
+exports.makeBasicTemplate = makeBasicTemplate;
+
+
+/***/ }),
+
+/***/ 1429:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.makeTemplate = void 0;
+const types_1 = __nccwpck_require__(3779);
+const basic_1 = __nccwpck_require__(2598);
+function makeTemplate(props) {
+    switch (props.type) {
+        case types_1.TemplateType.Basic:
+            return (0, basic_1.makeBasicTemplate)(props);
+        default:
+            return (0, basic_1.makeBasicTemplate)(props);
+    }
+}
+exports.makeTemplate = makeTemplate;
+
+
+/***/ }),
+
+/***/ 3779:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TemplateType = void 0;
+var TemplateType;
+(function (TemplateType) {
+    TemplateType["Basic"] = "basic";
+})(TemplateType = exports.TemplateType || (exports.TemplateType = {}));
 
 
 /***/ }),
