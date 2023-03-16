@@ -3,6 +3,11 @@ import * as core from '@actions/core'
 
 async function run(): Promise<void> {
   try {
+    const {GITHUB_HEAD_REF_SLUG_URL} = process.env || {}
+
+    // eslint-disable-next-line no-console
+    console.log(GITHUB_HEAD_REF_SLUG_URL)
+
     const branch = core.getInput('branch')
 
     const match = branch.match(

@@ -22,5 +22,5 @@ jobs:
       - uses: ./
         with:
           branch: 'feat/xxx-000-test'
-      - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
