@@ -30,14 +30,8 @@ jobs:
         uses: ./
         with:
           branch: 'feat/xxx-000-test2'
+        id: abc
 
-  prefill: # make sure the action works on a clean machine without building
-    runs-on: ubuntu-latest
-    needs: [test]
-    steps:
-      - env:
-        TITLE: ${{ steps.test.outputs.title }}
-        DESCRIPTION: ${{ steps.test.outputs.description }}
       - name: Set the pull request title and description
         uses: actions/github-script@v3
         with:
@@ -45,7 +39,10 @@ jobs:
           script: |
             const inputs = context.payload.pull_request;
 
-            console.log(process.env)
+            console.log(`
+              ${{steps.abc.outputs.TITLE}}
+              ${{steps.abc.outputs.DESCRIPTION}}
+            `)
 
             const result = await github.pulls.update({
               ...context.repo,
