@@ -117,8 +117,7 @@ ${description ? (0, strings_1.capitalizeFirstLetter)(description) : 'No descript
 
 - [ ] New features are documented
 - [ ] Bug fixes include a test case to prevent regression
-- [ ] Changes have been reviewed by at least one other team member
-- [ ] Pull request has been approved by a team lead or maintainer
+- [ ] Changes have been reviewed by at least one other team member or maintainer
 `;
 }
 exports.makeBasicTemplate = makeBasicTemplate;
@@ -158,6 +157,12 @@ ${prefix === 'test' ? '- [x] :white_check_mark: Tests' : ''}
 ### Summary
 
 ${description ? (0, strings_1.capitalizeFirstLetter)(description) : 'No description'}
+
+### Checklist
+
+- [ ] New features are documented
+- [ ] Bug fixes include a test case to prevent regression
+- [ ] Changes have been reviewed by at least one other team member or maintainer
 `;
 }
 exports.makeConventionalTemplate = makeConventionalTemplate;

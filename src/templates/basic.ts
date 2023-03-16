@@ -25,7 +25,6 @@ ${description ? capitalizeFirstLetter(description) : 'No description provided.'}
 
 - [ ] New features are documented
 - [ ] Bug fixes include a test case to prevent regression
-- [ ] Changes have been reviewed by at least one other team member
-- [ ] Pull request has been approved by a team lead or maintainer
+- [ ] Changes have been reviewed by at least one other team member or maintainer
 `
 }
