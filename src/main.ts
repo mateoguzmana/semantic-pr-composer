@@ -19,8 +19,8 @@ async function run(): Promise<void> {
 
     const context = github.context
 
-    const myToken = core.getInput('github-token')
-    const octokit = github.getOctokit(myToken)
+    const token = core.getInput('github-token')
+    const octokit = github.getOctokit(token)
 
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({

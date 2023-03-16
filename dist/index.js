@@ -55,8 +55,8 @@ function run() {
             core.setOutput('title', 'test title output');
             core.setOutput('description', 'test description output');
             const context = github.context;
-            const myToken = core.getInput('github-token');
-            const octokit = github.getOctokit(myToken);
+            const token = core.getInput('github-token');
+            const octokit = github.getOctokit(token);
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'melongo', body: 'melongo' }));
             }
