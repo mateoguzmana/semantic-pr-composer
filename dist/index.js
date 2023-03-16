@@ -45,7 +45,7 @@ function run() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { GITHUB_HEAD_REF_SLUG_URL, GITHUB_REF_NAME } = process.env || {};
+            const { GITHUB_HEAD_REF_SLUG_URL } = process.env || {};
             // eslint-disable-next-line no-console
             console.log(GITHUB_HEAD_REF_SLUG_URL);
             const branch = core.getInput('branch');

@@ -3,7 +3,7 @@ import * as github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
-    const {GITHUB_HEAD_REF_SLUG_URL, GITHUB_REF_NAME} = process.env || {}
+    const {GITHUB_HEAD_REF_SLUG_URL} = process.env || {}
 
     // eslint-disable-next-line no-console
     console.log(GITHUB_HEAD_REF_SLUG_URL)
