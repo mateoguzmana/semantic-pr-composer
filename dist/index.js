@@ -45,7 +45,7 @@ function run() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { GITHUB_HEAD_REF_SLUG_URL } = process.env || {};
+            const { GITHUB_HEAD_REF_SLUG_URL, GITHUB_REF_NAME } = process.env || {};
             // eslint-disable-next-line no-console
             console.log(GITHUB_HEAD_REF_SLUG_URL);
             const branch = core.getInput('branch');
@@ -53,7 +53,7 @@ function run() {
             const context = github.context;
             const octokit = github.getOctokit(token);
             // eslint-disable-next-line no-console
-            console.log({ context: github.context.ref }, '${{GITHUB_REF_NAME}}');
+            console.log({ context: github.context.ref }, GITHUB_REF_NAME);
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'feat(prefill): prefill test', body: 'prefill test' }));
             }

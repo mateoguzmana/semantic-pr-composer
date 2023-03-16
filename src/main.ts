@@ -3,7 +3,7 @@ import * as github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
-    const {GITHUB_HEAD_REF_SLUG_URL} = process.env || {}
+    const {GITHUB_HEAD_REF_SLUG_URL, GITHUB_REF_NAME} = process.env || {}
 
     // eslint-disable-next-line no-console
     console.log(GITHUB_HEAD_REF_SLUG_URL)
@@ -15,7 +15,7 @@ async function run(): Promise<void> {
     const octokit = github.getOctokit(token)
 
     // eslint-disable-next-line no-console
-    console.log({context: github.context.ref}, '${{GITHUB_REF_NAME}}')
+    console.log({context: github.context.ref}, GITHUB_REF_NAME)
 
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({
