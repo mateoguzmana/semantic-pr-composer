@@ -14,9 +14,6 @@ async function run(): Promise<void> {
     const context = github.context
     const octokit = github.getOctokit(token)
 
-    // eslint-disable-next-line no-console
-    console.log(process.env)
-
     if (github.context.payload.pull_request?.number) {
       await octokit.rest.pulls.update({
         ...context.repo,
@@ -31,12 +28,7 @@ async function run(): Promise<void> {
     )
 
     if (!match?.groups) {
-      // eslint-disable-next-line no-console
-      console.log(
-        'Invalid branch name, skipping pre-fill',
-        GITHUB_HEAD_REF,
-        'nothign'
-      )
+      core.setFailed('Invalid branch name, skipping pre-fill')
 
       return
     }

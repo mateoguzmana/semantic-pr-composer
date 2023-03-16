@@ -52,15 +52,12 @@ function run() {
             const token = core.getInput('github-token');
             const context = github.context;
             const octokit = github.getOctokit(token);
-            // eslint-disable-next-line no-console
-            console.log(process.env);
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: 'feat(prefill): prefill test', body: 'prefill test' }));
             }
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
-                // eslint-disable-next-line no-console
-                console.log('Invalid branch name, skipping pre-fill', GITHUB_HEAD_REF, 'nothign');
+                core.setFailed('Invalid branch name, skipping pre-fill');
                 return;
             }
             const { prefix, ticket, title } = match.groups;
