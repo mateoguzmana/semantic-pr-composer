@@ -35,9 +35,10 @@ async function run(): Promise<void> {
 
     const descriptionBody = title.replace(/-/g, ' ')
     const formattedTicket = ticket ? ticket.toUpperCase() : undefined
-    const pullRequestTitle = `${prefix}${
-      formattedTicket ? `(${formattedTicket})` : ''
-    }: ${descriptionBody}`
+
+    // @TODO: Add support for a dynamic title, using a regex to replace depending on the desired format
+    // prettier-ignore
+    const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`
 
     const body = makeTemplate({
       ticket: formattedTicket,
