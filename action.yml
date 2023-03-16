@@ -7,6 +7,9 @@ inputs:
   ticket-base-url:
     description: 'Base URL for the ticket system'
     required: false
+  template-type:
+    description: 'Template type. Currently "Basic" and "Emojis" are supported."'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'

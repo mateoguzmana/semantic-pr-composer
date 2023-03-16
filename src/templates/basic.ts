@@ -8,7 +8,7 @@ export function makeBasicTemplate({
   return `
 ### Summary
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})        
+[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
 
 - [ ] I have added unit tests
 - [ ] I have tested my changes locally

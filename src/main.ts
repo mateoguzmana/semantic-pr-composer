@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {makeTemplate} from './templates'
 import {TemplateType} from './templates/types'
+import {makeTemplate} from './templates'
 
 async function run(): Promise<void> {
   try {
@@ -13,11 +13,12 @@ async function run(): Promise<void> {
       return
     }
 
+    const token = core.getInput('github-token')
     const ticketBaseUrl = core.getInput('ticket-base-url')
+    const templateType = core.getInput('template-type')
 
     const branch = GITHUB_HEAD_REF
 
-    const token = core.getInput('github-token')
     const context = github.context
     const octokit = github.getOctokit(token)
 
@@ -41,9 +42,11 @@ async function run(): Promise<void> {
     const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`
 
     const body = makeTemplate({
+      prefix,
       ticket: formattedTicket,
       ticketBaseUrl,
-      type: TemplateType.Basic
+      description: descriptionBody,
+      type: templateType as TemplateType
     })
 
     if (github.context.payload.pull_request?.number) {
