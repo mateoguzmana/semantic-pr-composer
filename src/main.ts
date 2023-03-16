@@ -42,9 +42,9 @@ async function run(): Promise<void> {
 
     // prettier-ignore
     const body = `
-      ### Summary
+### Summary
       
-      [${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})          
+[${formattedTicket || 'No ticket'}](${formattedTicket ? `${ticketBaseUrl}${formattedTicket}` : ''})          
     `
 
     if (github.context.payload.pull_request?.number) {
