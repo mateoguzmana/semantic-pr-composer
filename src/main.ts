@@ -3,10 +3,10 @@ import * as github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
-    const {GITHUB_HEAD_REF_SLUG_URL} = process.env || {}
+    const {GITHUB_HEAD_REF} = process.env || {}
 
     // eslint-disable-next-line no-console
-    console.log(GITHUB_HEAD_REF_SLUG_URL)
+    console.log(GITHUB_HEAD_REF)
 
     const branch = core.getInput('branch')
 
@@ -34,7 +34,7 @@ async function run(): Promise<void> {
       // eslint-disable-next-line no-console
       console.log(
         'Invalid branch name, skipping pre-fill',
-        GITHUB_HEAD_REF_SLUG_URL,
+        GITHUB_HEAD_REF,
         'nothign'
       )
 

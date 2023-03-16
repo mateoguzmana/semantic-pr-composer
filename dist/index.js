@@ -45,9 +45,9 @@ function run() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { GITHUB_HEAD_REF_SLUG_URL } = process.env || {};
+            const { GITHUB_HEAD_REF } = process.env || {};
             // eslint-disable-next-line no-console
-            console.log(GITHUB_HEAD_REF_SLUG_URL);
+            console.log(GITHUB_HEAD_REF);
             const branch = core.getInput('branch');
             const token = core.getInput('github-token');
             const context = github.context;
@@ -60,7 +60,7 @@ function run() {
             const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\-(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
                 // eslint-disable-next-line no-console
-                console.log('Invalid branch name, skipping pre-fill', GITHUB_HEAD_REF_SLUG_URL, 'nothign');
+                console.log('Invalid branch name, skipping pre-fill', GITHUB_HEAD_REF, 'nothign');
                 return;
             }
             const { prefix, ticket, title } = match.groups;
