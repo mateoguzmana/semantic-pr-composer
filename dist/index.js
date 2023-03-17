@@ -198,13 +198,12 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeCustomTemplate = void 0;
+const getKeyValue = (key) => (obj) => obj[key];
 function makeCustomTemplate(options) {
     const { customTemplate } = options, params = __rest(options, ["customTemplate"]);
     let output = customTemplate !== null && customTemplate !== void 0 ? customTemplate : '';
     for (const key in params) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore - TS doesn't like the dynamic key
-        output = output.replace(key, params[key]);
+        output = output.replace(key, getKeyValue(key)(params));
     }
     return output;
 }
