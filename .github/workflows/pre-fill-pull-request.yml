@@ -46,5 +46,7 @@ jobs:
             ### Checklist
 
             - [ ] I have added/updated unit tests
+
             - [ ] I have added/updated documentation
+
             - [ ] I have updated the [CHANGELOG.md](./CHANGELOG.md) file
