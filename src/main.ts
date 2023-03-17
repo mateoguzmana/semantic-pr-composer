@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {TemplateType} from './templates/types'
-import {makeTemplate} from './templates'
 import {formatTitle} from './utils/title'
+import {makeTemplate} from './templates'
 
 async function run(): Promise<void> {
   try {

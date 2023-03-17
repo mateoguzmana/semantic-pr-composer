@@ -41,8 +41,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-const templates_1 = __nccwpck_require__(1429);
 const title_1 = __nccwpck_require__(6550);
+const templates_1 = __nccwpck_require__(1429);
 function run() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -185,15 +185,13 @@ exports.makeTemplate = void 0;
 const types_1 = __nccwpck_require__(3779);
 const basic_1 = __nccwpck_require__(2598);
 const conventional_1 = __nccwpck_require__(5173);
+const makeTemplateMap = {
+    [types_1.TemplateType.Basic]: basic_1.makeBasicTemplate,
+    [types_1.TemplateType.Conventional]: conventional_1.makeConventionalTemplate
+};
 function makeTemplate(props) {
-    switch (props.type) {
-        case types_1.TemplateType.Basic:
-            return (0, basic_1.makeBasicTemplate)(props);
-        case types_1.TemplateType.Conventional:
-            return (0, conventional_1.makeConventionalTemplate)(props);
-        default:
-            return (0, basic_1.makeBasicTemplate)(props);
-    }
+    const make = makeTemplateMap[props.type] || basic_1.makeBasicTemplate;
+    return make(props);
 }
 exports.makeTemplate = makeTemplate;
 
