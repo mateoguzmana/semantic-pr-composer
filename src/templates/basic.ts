@@ -11,7 +11,7 @@ export function makeBasicTemplate({
   return `
 ### Related Issue
 
-${ticket ? `[${ticket}](${ticketBaseUrl}${ticket})` : 'No related issue'}
+${ticket ? `[${ticket}](${ticketBaseUrl}/${ticket})` : 'No related issue'}
 
 ### Change Type
 

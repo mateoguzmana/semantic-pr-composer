@@ -113,7 +113,7 @@ function makeBasicTemplate({ prefix, ticket, ticketBaseUrl, description }) {
     return `
 ### Related Issue
 
-${ticket ? `[${ticket}](${ticketBaseUrl}${ticket})` : 'No related issue'}
+${ticket ? `[${ticket}](${ticketBaseUrl}/${ticket})` : 'No related issue'}
 
 ### Change Type
 
@@ -148,7 +148,7 @@ function makeConventionalTemplate({ prefix, ticket, ticketBaseUrl, description }
     return `
 ### Related issue
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
+[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}/${ticket}` : ''})
 
 ### Change Scope
 

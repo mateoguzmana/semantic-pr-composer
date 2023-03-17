@@ -11,7 +11,7 @@ export function makeConventionalTemplate({
   return `
 ### Related issue
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
+[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}/${ticket}` : ''})
 
 ### Change Scope
 
