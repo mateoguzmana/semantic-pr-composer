@@ -7,7 +7,7 @@ export enum TemplateType {
 export interface TemplateProps {
   prefix?: string
   ticket?: string
-  ticketBaseUrl?: string
+  projectBaseUrl?: string
   description?: string
   type?: TemplateType
   /**

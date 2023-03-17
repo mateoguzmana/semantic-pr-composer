@@ -27,7 +27,7 @@ jobs:
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          ticket-base-url: 'https://trello.com/c/SMTbdsor'
+          project-base-url: 'https://trello.com/c/SMTbdsor'
           template-type: 'conventional'
           title-format: 'prefix(ticket): description'
           custom-template: >
