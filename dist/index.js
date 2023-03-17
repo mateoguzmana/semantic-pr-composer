@@ -203,7 +203,7 @@ function makeCustomTemplate(options) {
     const { customTemplate } = options, params = __rest(options, ["customTemplate"]);
     let output = customTemplate !== null && customTemplate !== void 0 ? customTemplate : '';
     for (const key in params) {
-        output = output.replace(key, getKeyValue(key)(params));
+        output = output.replace(new RegExp(key, 'g'), getKeyValue(key)(params));
     }
     return output;
 }
