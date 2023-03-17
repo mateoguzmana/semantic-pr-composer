@@ -15,7 +15,7 @@ async function run(): Promise<void> {
     }
 
     const token = core.getInput('github-token')
-    const ticketBaseUrl = core.getInput('ticket-base-url')
+    const projectBaseUrl = core.getInput('project-base-url')
     const templateType = core.getInput('template-type')
     const titleFormat = core.getInput('title-format')
     const customTemplate = core.getInput('custom-template')
@@ -50,7 +50,7 @@ async function run(): Promise<void> {
     const body = makeTemplate({
       prefix,
       ticket: formattedTicket,
-      ticketBaseUrl,
+      projectBaseUrl,
       description: descriptionBody,
       type: customTemplate
         ? TemplateType.Custom

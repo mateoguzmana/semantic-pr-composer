@@ -4,8 +4,8 @@ inputs:
   github-token:
     description: 'GitHub token'
     required: true
-  ticket-base-url:
-    description: 'Base URL for the ticket system'
+  project-base-url:
+    description: 'Base URL for the project/task/ticket system'
     required: false
   template-type:
     description: 'Template type. Currently "basic" and "conventional" are supported."'

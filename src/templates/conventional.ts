@@ -4,14 +4,14 @@ import {capitalizeFirstLetter} from '../utils/strings'
 export function makeConventionalTemplate({
   prefix,
   ticket,
-  ticketBaseUrl,
+  projectBaseUrl,
   description
 }: TemplateProps): string {
   // prettier-ignore
   return `
 ### Related issue
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
+[${ticket || 'No ticket'}](${ticket ? `${projectBaseUrl}/${ticket}` : ''})
 
 ### Change Scope
 

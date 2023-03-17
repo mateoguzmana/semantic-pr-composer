@@ -54,7 +54,7 @@ function run() {
                 return;
             }
             const token = core.getInput('github-token');
-            const ticketBaseUrl = core.getInput('ticket-base-url');
+            const projectBaseUrl = core.getInput('project-base-url');
             const templateType = core.getInput('template-type');
             const titleFormat = core.getInput('title-format');
             const customTemplate = core.getInput('custom-template');
@@ -78,7 +78,7 @@ function run() {
             const body = (0, templates_1.makeTemplate)({
                 prefix,
                 ticket: formattedTicket,
-                ticketBaseUrl,
+                projectBaseUrl,
                 description: descriptionBody,
                 type: customTemplate
                     ? types_1.TemplateType.Custom
@@ -108,12 +108,12 @@ run();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeBasicTemplate = void 0;
 const strings_1 = __nccwpck_require__(4100);
-function makeBasicTemplate({ prefix, ticket, ticketBaseUrl, description }) {
+function makeBasicTemplate({ prefix, ticket, projectBaseUrl, description }) {
     // prettier-ignore
     return `
 ### Related Issue
 
-${ticket ? `[${ticket}](${ticketBaseUrl}${ticket})` : 'No related issue'}
+${ticket ? `[${ticket}](${projectBaseUrl}/${ticket})` : 'No related issue'}
 
 ### Change Type
 
@@ -143,12 +143,12 @@ exports.makeBasicTemplate = makeBasicTemplate;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeConventionalTemplate = void 0;
 const strings_1 = __nccwpck_require__(4100);
-function makeConventionalTemplate({ prefix, ticket, ticketBaseUrl, description }) {
+function makeConventionalTemplate({ prefix, ticket, projectBaseUrl, description }) {
     // prettier-ignore
     return `
 ### Related issue
 
-[${ticket || 'No ticket'}](${ticket ? `${ticketBaseUrl}${ticket}` : ''})
+[${ticket || 'No ticket'}](${ticket ? `${projectBaseUrl}/${ticket}` : ''})
 
 ### Change Scope
 
@@ -203,7 +203,7 @@ function makeCustomTemplate(options) {
     const { customTemplate } = options, params = __rest(options, ["customTemplate"]);
     let output = customTemplate !== null && customTemplate !== void 0 ? customTemplate : '';
     for (const key in params) {
-        output = output.replace(key, getKeyValue(key)(params));
+        output = output.replace(new RegExp(key, 'g'), getKeyValue(key)(params));
     }
     return output;
 }

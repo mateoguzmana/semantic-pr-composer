@@ -10,7 +10,10 @@ export function makeCustomTemplate(options: TemplateProps): string {
   let output = customTemplate ?? ''
 
   for (const key in params) {
-    output = output.replace(key, getKeyValue(key as never)(params))
+    output = output.replace(
+      new RegExp(key, 'g'),
+      getKeyValue(key as never)(params)
+    )
   }
 
   return output
