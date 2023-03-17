@@ -41,6 +41,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+const types_1 = __nccwpck_require__(3779);
 const title_1 = __nccwpck_require__(6550);
 const templates_1 = __nccwpck_require__(1429);
 function run() {
@@ -56,6 +57,7 @@ function run() {
             const ticketBaseUrl = core.getInput('ticket-base-url');
             const templateType = core.getInput('template-type');
             const titleFormat = core.getInput('title-format');
+            const customTemplate = core.getInput('custom-template');
             const branch = GITHUB_HEAD_REF;
             const context = github.context;
             const octokit = github.getOctokit(token);
@@ -78,7 +80,10 @@ function run() {
                 ticket: formattedTicket,
                 ticketBaseUrl,
                 description: descriptionBody,
-                type: templateType
+                type: customTemplate
+                    ? types_1.TemplateType.Custom
+                    : templateType,
+                customTemplate
             });
             if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
@@ -175,6 +180,43 @@ exports.makeConventionalTemplate = makeConventionalTemplate;
 
 /***/ }),
 
+/***/ 2568:
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.makeCustomTemplate = void 0;
+function makeCustomTemplate(props) {
+    const { customTemplate } = props, params = __rest(props, ["customTemplate"]);
+    const keysToReplace = [
+        params.prefix,
+        params.ticket,
+        params.ticketBaseUrl,
+        params.description
+    ];
+    let output = customTemplate !== null && customTemplate !== void 0 ? customTemplate : '';
+    for (const key of keysToReplace) {
+        output = output.replace(key !== null && key !== void 0 ? key : '', '');
+    }
+    return output;
+}
+exports.makeCustomTemplate = makeCustomTemplate;
+
+
+/***/ }),
+
 /***/ 1429:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -185,9 +227,11 @@ exports.makeTemplate = void 0;
 const types_1 = __nccwpck_require__(3779);
 const basic_1 = __nccwpck_require__(2598);
 const conventional_1 = __nccwpck_require__(5173);
+const custom_1 = __nccwpck_require__(2568);
 const makeTemplateMap = {
     [types_1.TemplateType.Basic]: basic_1.makeBasicTemplate,
-    [types_1.TemplateType.Conventional]: conventional_1.makeConventionalTemplate
+    [types_1.TemplateType.Conventional]: conventional_1.makeConventionalTemplate,
+    [types_1.TemplateType.Custom]: custom_1.makeCustomTemplate
 };
 function makeTemplate(props) {
     const make = makeTemplateMap[props.type] || basic_1.makeBasicTemplate;
@@ -209,6 +253,7 @@ var TemplateType;
 (function (TemplateType) {
     TemplateType["Basic"] = "basic";
     TemplateType["Conventional"] = "conventional";
+    TemplateType["Custom"] = "custom";
 })(TemplateType = exports.TemplateType || (exports.TemplateType = {}));
 
 

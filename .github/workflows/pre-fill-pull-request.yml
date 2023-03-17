@@ -30,3 +30,4 @@ jobs:
           ticket-base-url: 'https://trello.com/c/SMTbdsor/'
           template-type: 'conventional'
           title-format: 'prefix(ticket): description'
+          custom-template: 'prefix(ticket): description'

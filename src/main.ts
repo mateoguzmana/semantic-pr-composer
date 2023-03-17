@@ -18,6 +18,7 @@ async function run(): Promise<void> {
     const ticketBaseUrl = core.getInput('ticket-base-url')
     const templateType = core.getInput('template-type')
     const titleFormat = core.getInput('title-format')
+    const customTemplate = core.getInput('custom-template')
 
     const branch = GITHUB_HEAD_REF
 
@@ -51,7 +52,10 @@ async function run(): Promise<void> {
       ticket: formattedTicket,
       ticketBaseUrl,
       description: descriptionBody,
-      type: templateType as TemplateType
+      type: customTemplate
+        ? TemplateType.Custom
+        : (templateType as TemplateType),
+      customTemplate
     })
 
     if (github.context.payload.pull_request?.number) {

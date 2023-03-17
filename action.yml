@@ -13,6 +13,9 @@ inputs:
   title-format:
     description: 'Title format. Use the keywords "prefix", "ticket" and "description" as placeholders. You can check the default format and more examples in the README.'
     required: false
+  custom-template:
+    description: 'Custom template for the pull request description. Use the keywords "prefix", "ticket" and "description" as placeholders. You can check the default template and more examples in the README. If you use this input, the "template-type" input will be ignored.'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'
