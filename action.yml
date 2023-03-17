@@ -10,6 +10,9 @@ inputs:
   template-type:
     description: 'Template type. Currently "basic" and "conventional" are supported."'
     required: false
+  title-format:
+    description: 'Title format. Use the keywords "prefix", "ticket" and "description" as placeholders. You can check the default format and more examples in the README.'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'

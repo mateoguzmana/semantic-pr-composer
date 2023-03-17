@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {TemplateType} from './templates/types'
 import {makeTemplate} from './templates'
+import {formatTitle} from './utils/title'
 
 async function run(): Promise<void> {
   try {
@@ -16,6 +17,7 @@ async function run(): Promise<void> {
     const token = core.getInput('github-token')
     const ticketBaseUrl = core.getInput('ticket-base-url')
     const templateType = core.getInput('template-type')
+    const titleFormat = core.getInput('title-format')
 
     const branch = GITHUB_HEAD_REF
 
@@ -37,9 +39,12 @@ async function run(): Promise<void> {
     const descriptionBody = title.replace(/-/g, ' ')
     const formattedTicket = ticket ? ticket.toUpperCase() : undefined
 
-    // @TODO: Add support for a dynamic title, using a regex to replace depending on the desired format
-    // prettier-ignore
-    const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`
+    const pullRequestTitle = formatTitle({
+      format: titleFormat,
+      prefix,
+      ticket: formattedTicket ?? '',
+      description: descriptionBody
+    })
 
     const body = makeTemplate({
       prefix,

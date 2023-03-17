@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const templates_1 = __nccwpck_require__(1429);
+const title_1 = __nccwpck_require__(6550);
 function run() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -54,6 +55,7 @@ function run() {
             const token = core.getInput('github-token');
             const ticketBaseUrl = core.getInput('ticket-base-url');
             const templateType = core.getInput('template-type');
+            const titleFormat = core.getInput('title-format');
             const branch = GITHUB_HEAD_REF;
             const context = github.context;
             const octokit = github.getOctokit(token);
@@ -65,9 +67,12 @@ function run() {
             const { prefix, ticket, title } = match.groups;
             const descriptionBody = title.replace(/-/g, ' ');
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
-            // @TODO: Add support for a dynamic title, using a regex to replace depending on the desired format
-            // prettier-ignore
-            const pullRequestTitle = `${prefix}${formattedTicket ? `(${formattedTicket})` : ''}: ${descriptionBody}`;
+            const pullRequestTitle = (0, title_1.formatTitle)({
+                format: titleFormat,
+                prefix,
+                ticket: formattedTicket !== null && formattedTicket !== void 0 ? formattedTicket : '',
+                description: descriptionBody
+            });
             const body = (0, templates_1.makeTemplate)({
                 prefix,
                 ticket: formattedTicket,
@@ -222,6 +227,37 @@ function capitalizeFirstLetter(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
 exports.capitalizeFirstLetter = capitalizeFirstLetter;
+
+
+/***/ }),
+
+/***/ 6550:
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.formatTitle = void 0;
+function formatTitle(options) {
+    const { format } = options, params = __rest(options, ["format"]);
+    let output = format;
+    for (const key in params) {
+        output = output.replace(key, params[key]);
+    }
+    return output;
+}
+exports.formatTitle = formatTitle;
 
 
 /***/ }),
