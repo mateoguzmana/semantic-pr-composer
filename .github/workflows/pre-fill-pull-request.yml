@@ -33,7 +33,7 @@ jobs:
           custom-template: >
             ### Description
 
-            [ticket](ticketBaseUrl/ticket)
+            [ticket](projectBaseUrl/ticket)
 
             ### Amazing changes
 
