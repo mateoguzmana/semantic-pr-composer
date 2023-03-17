@@ -1,18 +1,13 @@
 import {TemplateProps} from './types'
 
-export function makeCustomTemplate(props: TemplateProps): string {
-  const {customTemplate, prefix, ticket, ticketBaseUrl, description} = props
-
-  const keysToReplace = [prefix, ticket, ticketBaseUrl, description]
-
+export function makeCustomTemplate(options: TemplateProps): string {
+  const {customTemplate, ...params} = options
   let output = customTemplate ?? ''
 
-  for (const key of keysToReplace) {
-    if (!key) return ''
-
+  for (const key in params) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore - TS doesn't know that key is a string
-    output = output.replace(key, keysToReplace[key])
+    // @ts-ignore - TS doesn't like the dynamic key
+    output = output.replace(key, params[key])
   }
 
   return output

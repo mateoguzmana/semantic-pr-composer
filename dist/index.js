@@ -181,22 +181,30 @@ exports.makeConventionalTemplate = makeConventionalTemplate;
 /***/ }),
 
 /***/ 2568:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeCustomTemplate = void 0;
-function makeCustomTemplate(props) {
-    const { customTemplate, prefix, ticket, ticketBaseUrl, description } = props;
-    const keysToReplace = [prefix, ticket, ticketBaseUrl, description];
+function makeCustomTemplate(options) {
+    const { customTemplate } = options, params = __rest(options, ["customTemplate"]);
     let output = customTemplate !== null && customTemplate !== void 0 ? customTemplate : '';
-    for (const key of keysToReplace) {
-        if (!key)
-            return '';
+    for (const key in params) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore - TS doesn't know that key is a string
-        output = output.replace(key, keysToReplace[key]);
+        // @ts-ignore - TS doesn't like the dynamic key
+        output = output.replace(key, params[key]);
     }
     return output;
 }
