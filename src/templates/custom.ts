@@ -1,14 +1,9 @@
 import {TemplateProps} from './types'
 
 export function makeCustomTemplate(props: TemplateProps): string {
-  const {customTemplate, ...params} = props
+  const {customTemplate, prefix, ticket, ticketBaseUrl, description} = props
 
-  const keysToReplace = [
-    params.prefix,
-    params.ticket,
-    params.ticketBaseUrl,
-    params.description
-  ]
+  const keysToReplace = [prefix, ticket, ticketBaseUrl, description]
 
   let output = customTemplate ?? ''
 

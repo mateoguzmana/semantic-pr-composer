@@ -181,31 +181,15 @@ exports.makeConventionalTemplate = makeConventionalTemplate;
 /***/ }),
 
 /***/ 2568:
-/***/ (function(__unused_webpack_module, exports) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeCustomTemplate = void 0;
 function makeCustomTemplate(props) {
-    const { customTemplate } = props, params = __rest(props, ["customTemplate"]);
-    const keysToReplace = [
-        params.prefix,
-        params.ticket,
-        params.ticketBaseUrl,
-        params.description
-    ];
+    const { customTemplate, prefix, ticket, ticketBaseUrl, description } = props;
+    const keysToReplace = [prefix, ticket, ticketBaseUrl, description];
     let output = customTemplate !== null && customTemplate !== void 0 ? customTemplate : '';
     for (const key of keysToReplace) {
         output = output.replace(key !== null && key !== void 0 ? key : '', '');
