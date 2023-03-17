@@ -192,7 +192,11 @@ function makeCustomTemplate(props) {
     const keysToReplace = [prefix, ticket, ticketBaseUrl, description];
     let output = customTemplate !== null && customTemplate !== void 0 ? customTemplate : '';
     for (const key of keysToReplace) {
-        output = output.replace(key !== null && key !== void 0 ? key : '', '');
+        if (!key)
+            return '';
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore - TS doesn't know that key is a string
+        output = output.replace(key, keysToReplace[key]);
     }
     return output;
 }
