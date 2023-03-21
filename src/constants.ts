@@ -11,5 +11,5 @@ export const DEFAULTS = {
     'release',
     'refactor'
   ],
-  TICKETS: ['xxx', 'test']
+  TICKETS: ['test']
 }

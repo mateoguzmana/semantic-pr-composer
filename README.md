@@ -29,13 +29,49 @@ jobs:
 
 ## Options
 
-| Option                                | Description                                 | Default                         |
-| ------------------------------------- | ------------------------------------------- | ------------------------------- |
-| `github-token`                        | The GitHub token to use for the API calls.  | `${{ secrets.GITHUB_TOKEN }}`   |
-| `title-format`                        | The title format to use                     | `'prefix(ticket): description'` |
-| [`template-type`](#template-type)     | The template type to use                    | `'basic'`                       |
-| `project-base-url`                    | Base URL for the project/task/ticket system | `'https://example.com'`         |
-| [`custom-template`](#custom-template) | If set, `template-type` is ignored          |                                 |
+| Option                                  | Description                                 | Default                         |
+| --------------------------------------- | ------------------------------------------- | ------------------------------- |
+| `github-token`                          | The GitHub token to use for the API calls.  | `${{ secrets.GITHUB_TOKEN }}`   |
+| [`title-format`](#title-format)         | The title format to use                     | `'prefix(ticket): description'` |
+| [`project-base-url`](#project-base-url) | Base URL for the project/task/ticket system | `'https://example.com'`         |
+| [`template-type`](#template-type)       | The template type to use                    | `'basic'`                       |
+| [`custom-template`](#custom-template)   | If set, `template-type` is ignored          |                                 |
+| [`prefixes`](#prefixes)                 | The prefixes to use                         | [Default prefixes](#prefixes)   |
+| [`tickets`](#tickets)                   | The tickets to use                          | [Default tickets](#tickets)     |
+
+### Title Format
+
+The title format is used to determine how to format the pull request title.
+
+The title format is a string that can contain the following placeholders:
+
+- `prefix` - The prefix of the branch name
+- `ticket` - The ticket number of the branch name
+- `description` - The description of the branch name
+
+Example:
+
+```yaml
+- uses: mateoguzmana/semantic-pull-request-prefill@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    title-format: 'prefix(ticket): description'
+```
+
+The default title format is based on [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). If you are using a different convention, you can pass your own title format.
+
+### Project Base URL
+
+The project base URL is used to determine the base URL for the project/task/ticket system.
+
+Example:
+
+```yaml
+- uses: mateoguzmana/semantic-pull-request-prefill@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    project-base-url: 'https://<yourprojectdomain>/issues'
+```
 
 ### Template Type
 
@@ -83,6 +119,54 @@ prefix
 ```
 
 _**Note**: Currently, the custom template will only replace the values above. If you are looking for a more advanced template, please open an issue. I am still investigating how to do something smarter where you can add conditional logic to the template._
+
+### Prefixes
+
+The prefixes are used to determine which prefix to use for the pull request title and body.
+
+The prefixes are an array of strings. Default prefixes are:
+
+- `feat`
+- `fix`
+- `docs`
+- `style`
+- `refactor`
+- `perf`
+- `test`
+- `chore`
+- `revert`
+- `build`
+- `ci`
+
+**Note**: The default prefixes are based on [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). If you are using a different convention, you can pass your own prefixes.
+
+You can pass them as an array of strings:
+
+```yaml
+- uses: mateoguzmana/semantic-pull-request-prefill@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    prefixes: |
+      ["feat", "fix", "chore", "docs", "refactor", "test", "style", "ci", "perf", "build"]
+```
+
+### Tickets
+
+The tickets are used to determine which ticket to use for the pull request title and body.
+
+The tickets are an array of strings. Default tickets are:
+
+- `test`
+
+You can pass them as an array of strings:
+
+```yaml
+- uses: mateoguzmana/semantic-pull-request-prefill@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    tickets: |
+      ["test", "test2"]
+```
 
 ---
 
