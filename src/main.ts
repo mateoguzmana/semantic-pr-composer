@@ -4,6 +4,8 @@ import {TemplateType} from './templates/types'
 import {formatTitle} from './utils/title'
 import {makeTemplate} from './templates'
 
+const DEFAULT_TITLE_FORMAT = 'prefix(ticket): description'
+
 async function run(): Promise<void> {
   try {
     const {GITHUB_HEAD_REF} = process.env
@@ -17,7 +19,7 @@ async function run(): Promise<void> {
     const token = core.getInput('github-token')
     const projectBaseUrl = core.getInput('project-base-url')
     const templateType = core.getInput('template-type')
-    const titleFormat = core.getInput('title-format')
+    const titleFormat = core.getInput('title-format') ?? DEFAULT_TITLE_FORMAT
     const customTemplate = core.getInput('custom-template')
 
     const branch = GITHUB_HEAD_REF
