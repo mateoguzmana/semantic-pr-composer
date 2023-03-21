@@ -1,10 +1,9 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import {DEFAULTS} from './constants'
 import {TemplateType} from './templates/types'
 import {formatTitle} from './utils/title'
 import {makeTemplate} from './templates'
-
-const DEFAULT_TITLE_FORMAT = 'prefix(ticket): description'
 
 async function run(): Promise<void> {
   try {
@@ -19,26 +18,15 @@ async function run(): Promise<void> {
     const token = core.getInput('github-token')
     const projectBaseUrl = core.getInput('project-base-url')
     const templateType = core.getInput('template-type')
-    const titleFormat = core.getInput('title-format') ?? DEFAULT_TITLE_FORMAT
+    const titleFormat = core.getInput('title-format') ?? DEFAULTS.TITLE_FORMAT
     const customTemplate = core.getInput('custom-template')
+    const prefixes = JSON.parse(core.getInput('prefixes')) ?? DEFAULTS.PREFIXES
+    const tickets = JSON.parse(core.getInput('tickets')) ?? DEFAULTS.TICKETS
 
     const branch = GITHUB_HEAD_REF
 
     const context = github.context
     const octokit = github.getOctokit(token)
-
-    const prefixes = [
-      'feature',
-      'feat',
-      'fix',
-      'bugfix',
-      'hotfix',
-      'chore',
-      'patch',
-      'release',
-      'refactor'
-    ]
-    const tickets = ['xxx', 'test']
 
     const prefixesOptions = prefixes.join('|')
     const ticketsOptions = tickets.join('|')
