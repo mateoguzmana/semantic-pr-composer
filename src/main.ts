@@ -43,6 +43,9 @@ async function run(): Promise<void> {
       )
     )
 
+    // eslint-disable-next-line no-console
+    console.log({prefixesOptions, ticketsOptions, match})
+
     if (!match?.groups) {
       core.info('Invalid branch name, skipping pre-fill')
 
