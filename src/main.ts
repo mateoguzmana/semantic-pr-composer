@@ -27,8 +27,26 @@ async function run(): Promise<void> {
     const context = github.context
     const octokit = github.getOctokit(token)
 
+    const prefixes = [
+      'feature',
+      'feat',
+      'fix',
+      'bugfix',
+      'hotfix',
+      'chore',
+      'patch',
+      'release',
+      'refactor'
+    ]
+    const tickets = ['xxx', 'test']
+
+    const prefixesOptions = prefixes.join('|')
+    const ticketsOptions = tickets.join('|')
+
     const match = branch.match(
-      /^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\/(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/
+      new RegExp(
+        `^(?<prefix>(${prefixesOptions}))\\/((?<ticket>(${ticketsOptions})-[0-9]*)-)?(?<title>.*)$`
+      )
     )
 
     if (!match?.groups) {
