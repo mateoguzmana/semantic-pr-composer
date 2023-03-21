@@ -11,15 +11,16 @@ exports.DEFAULTS = void 0;
 exports.DEFAULTS = {
     TITLE_FORMAT: 'prefix(ticket): description',
     PREFIXES: [
-        'feature',
         'feat',
         'fix',
-        'bugfix',
-        'hotfix',
         'chore',
-        'patch',
-        'release',
-        'refactor'
+        'docs',
+        'refactor',
+        'test',
+        'style',
+        'ci',
+        'perf',
+        'build'
     ],
     TICKETS: ['test']
 };
@@ -72,7 +73,7 @@ const types_1 = __nccwpck_require__(3779);
 const title_1 = __nccwpck_require__(6550);
 const templates_1 = __nccwpck_require__(1429);
 function run() {
-    var _a, _b, _c, _d;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { GITHUB_HEAD_REF } = process.env;
@@ -85,8 +86,12 @@ function run() {
             const templateType = core.getInput('template-type');
             const titleFormat = (_a = core.getInput('title-format')) !== null && _a !== void 0 ? _a : constants_1.DEFAULTS.TITLE_FORMAT;
             const customTemplate = core.getInput('custom-template');
-            const prefixes = (_b = JSON.parse(core.getInput('prefixes'))) !== null && _b !== void 0 ? _b : constants_1.DEFAULTS.PREFIXES;
-            const tickets = (_c = JSON.parse(core.getInput('tickets'))) !== null && _c !== void 0 ? _c : constants_1.DEFAULTS.TICKETS;
+            const prefixesInput = core.getInput('prefixes');
+            const ticketsInput = core.getInput('tickets');
+            const prefixes = prefixesInput
+                ? JSON.parse(prefixesInput)
+                : constants_1.DEFAULTS.PREFIXES;
+            const tickets = ticketsInput ? JSON.parse(ticketsInput) : constants_1.DEFAULTS.TICKETS;
             const branch = GITHUB_HEAD_REF;
             const context = github.context;
             const octokit = github.getOctokit(token);
@@ -116,7 +121,7 @@ function run() {
                     : templateType,
                 customTemplate
             });
-            if ((_d = github.context.payload.pull_request) === null || _d === void 0 ? void 0 : _d.number) {
+            if ((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
             }
         }
