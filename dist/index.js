@@ -1,6 +1,32 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 5105:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DEFAULTS = void 0;
+exports.DEFAULTS = {
+    TITLE_FORMAT: 'prefix(ticket): description',
+    PREFIXES: [
+        'feature',
+        'feat',
+        'fix',
+        'bugfix',
+        'hotfix',
+        'chore',
+        'patch',
+        'release',
+        'refactor'
+    ],
+    TICKETS: ['xxx', 'test']
+};
+
+
+/***/ }),
+
 /***/ 3109:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -41,11 +67,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+const constants_1 = __nccwpck_require__(5105);
 const types_1 = __nccwpck_require__(3779);
 const title_1 = __nccwpck_require__(6550);
 const templates_1 = __nccwpck_require__(1429);
 function run() {
-    var _a;
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { GITHUB_HEAD_REF } = process.env;
@@ -56,12 +83,16 @@ function run() {
             const token = core.getInput('github-token');
             const projectBaseUrl = core.getInput('project-base-url');
             const templateType = core.getInput('template-type');
-            const titleFormat = core.getInput('title-format');
+            const titleFormat = (_a = core.getInput('title-format')) !== null && _a !== void 0 ? _a : constants_1.DEFAULTS.TITLE_FORMAT;
             const customTemplate = core.getInput('custom-template');
+            const prefixes = (_b = core.getInput('prefixes').split(',')) !== null && _b !== void 0 ? _b : constants_1.DEFAULTS.PREFIXES;
+            const tickets = (_c = core.getInput('tickets').split(',')) !== null && _c !== void 0 ? _c : constants_1.DEFAULTS.TICKETS;
             const branch = GITHUB_HEAD_REF;
             const context = github.context;
             const octokit = github.getOctokit(token);
-            const match = branch.match(/^(?<prefix>feature|feat|fix|bugfix|hotfix|chore|patch|release|refactor)\/(?<ticket>(xxx|test)-[0-9]*)?-?(?<title>.*)$/);
+            const prefixesOptions = prefixes.join('|');
+            const ticketsOptions = tickets.join('|');
+            const match = branch.match(new RegExp(`^(?<prefix>(${prefixesOptions}))\\/((?<ticket>(${ticketsOptions})-[0-9]*)-)?(?<title>.*)$`));
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
                 core.info('Invalid branch name, skipping pre-fill');
                 return;
@@ -85,7 +116,7 @@ function run() {
                     : templateType,
                 customTemplate
             });
-            if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
+            if ((_d = github.context.payload.pull_request) === null || _d === void 0 ? void 0 : _d.number) {
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
             }
         }
