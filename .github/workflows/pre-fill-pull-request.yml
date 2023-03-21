@@ -50,3 +50,17 @@ jobs:
             - [ ] I have added/updated documentation
 
             - [ ] I have updated the [CHANGELOG.md](./CHANGELOG.md) file
+          prefixes:
+            [
+              'feat',
+              'fix',
+              'chore',
+              'docs',
+              'refactor',
+              'test',
+              'style',
+              'ci',
+              'perf',
+              'build'
+            ]
+          tickets: ['OGS', 'LTR', 'AGI', 'MIR', 'APA']

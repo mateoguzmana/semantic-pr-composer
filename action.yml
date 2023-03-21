@@ -16,6 +16,18 @@ inputs:
   custom-template:
     description: 'Custom template for the pull request description. Use the keywords "prefix", "ticket" and "description" as placeholders. You can check the default template and more examples in the README. If you use this input, the "template-type" input will be ignored.'
     required: false
+  prefixes:
+    description: 'List of prefixes to be used in the prefilling process.'
+    required: false
+    type: array
+    items:
+      type: string
+  tickets:
+    description: 'List of tickets to be used in the prefilling process.'
+    required: false
+    type: array
+    items:
+      type: string
 runs:
   using: 'node16'
   main: 'dist/index.js'
