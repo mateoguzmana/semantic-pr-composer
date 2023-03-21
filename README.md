@@ -58,6 +58,30 @@ The template is a string that can contain the following placeholders:
 - `projectBaseUrl` - The project base URL
 - `description` - The description of the branch name
 
+Example:
+
+```
+### My custom title
+
+[ticket](projectBaseUrl/ticket)
+
+### Amazing changes - custom format
+
+prefix
+
+### Description
+
+> description
+
+### Checklist
+
+- [ ] I have added/updated unit tests
+
+- [ ] I have added/updated documentation
+
+- [ ] I have updated the [CHANGELOG.md](./CHANGELOG.md) file
+```
+
 _**Note**: Currently, the custom template will only replace the values above. If you are looking for a more advanced template, please open an issue. I am still investigating how to do something smarter where you can add conditional logic to the template._
 
 ---
