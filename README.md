@@ -20,6 +20,9 @@ jobs:
       - uses: mateoguzmana/semantic-pull-request-prefill@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          title-format: 'prefix(ticket): description'
+          template-type: 'conventional'
+          project-base-url: 'https://<yourprojectdomain>/issues'
 ```
 
 ---
