@@ -25,6 +25,35 @@ jobs:
       - uses: actions/checkout@v3
       - name: Parsing branch name
         uses: ./
+        # with:
+        #   github-token: ${{ secrets.GITHUB_TOKEN }}
+        #   project-base-url: 'https://trello.com/c/SMTbdsor'
+        #   template-type: 'conventional'
+        #   title-format: 'prefix(ticket): description'
+        #   custom-template: >
+        #     ### Description
+
+        #     [ticket](projectBaseUrl/ticket)
+
+        #     ### Amazing changes
+
+        #     prefix
+
+        #     ### Description
+
+        #     description
+
+        #     ### Checklist
+
+        #     - [ ] I have added/updated unit tests
+
+        #     - [ ] I have added/updated documentation
+
+        #     - [ ] I have updated the [CHANGELOG.md](./CHANGELOG.md) file
+        #   prefixes: |
+        #     ["feat", "fix", "chore", "docs", "refactor", "test", "style", "ci", "perf", "build"]
+        #   tickets: |
+        #     ["OGS", "LTR", "AGI", "MIR", "APA"]
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           title-format: 'prefix(ticket): description'
