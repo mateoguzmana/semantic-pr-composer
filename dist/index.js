@@ -85,8 +85,8 @@ function run() {
             const templateType = core.getInput('template-type');
             const titleFormat = (_a = core.getInput('title-format')) !== null && _a !== void 0 ? _a : constants_1.DEFAULTS.TITLE_FORMAT;
             const customTemplate = core.getInput('custom-template');
-            const prefixes = (_b = core.getInput('prefixes').split(',')) !== null && _b !== void 0 ? _b : constants_1.DEFAULTS.PREFIXES;
-            const tickets = (_c = core.getInput('tickets').split(',')) !== null && _c !== void 0 ? _c : constants_1.DEFAULTS.TICKETS;
+            const prefixes = (_b = JSON.parse(core.getInput('prefixes'))) !== null && _b !== void 0 ? _b : constants_1.DEFAULTS.PREFIXES;
+            const tickets = (_c = JSON.parse(core.getInput('tickets'))) !== null && _c !== void 0 ? _c : constants_1.DEFAULTS.TICKETS;
             const branch = GITHUB_HEAD_REF;
             const context = github.context;
             const octokit = github.getOctokit(token);

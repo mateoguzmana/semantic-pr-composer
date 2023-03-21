@@ -20,8 +20,8 @@ async function run(): Promise<void> {
     const templateType = core.getInput('template-type')
     const titleFormat = core.getInput('title-format') ?? DEFAULTS.TITLE_FORMAT
     const customTemplate = core.getInput('custom-template')
-    const prefixes = core.getInput('prefixes').split(',') ?? DEFAULTS.PREFIXES
-    const tickets = core.getInput('tickets').split(',') ?? DEFAULTS.TICKETS
+    const prefixes = JSON.parse(core.getInput('prefixes')) ?? DEFAULTS.PREFIXES
+    const tickets = JSON.parse(core.getInput('tickets')) ?? DEFAULTS.TICKETS
 
     const branch = GITHUB_HEAD_REF
 
