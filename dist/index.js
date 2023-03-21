@@ -92,7 +92,11 @@ function run() {
             const octokit = github.getOctokit(token);
             const prefixesOptions = prefixes.join('|');
             const ticketsOptions = tickets.join('|');
+            // eslint-disable-next-line no-console
+            console.log({ prefixesOptions, ticketsOptions });
             const match = branch.match(new RegExp(`^(?<prefix>(${prefixesOptions}))\\/((?<ticket>(${ticketsOptions})-[0-9]*)-)?(?<title>.*)$`));
+            // eslint-disable-next-line no-console
+            console.log({ match });
             if (!(match === null || match === void 0 ? void 0 : match.groups)) {
                 core.info('Invalid branch name, skipping pre-fill');
                 return;
