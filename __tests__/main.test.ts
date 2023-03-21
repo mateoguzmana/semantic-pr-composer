@@ -5,7 +5,7 @@ import {test} from '@jest/globals'
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
-  process.env['INPUT_BRANCH'] = 'feat-xxx-1234-foo-bar'
+  process.env['INPUT_BRANCH'] = 'feat-test-1234-foo-bar'
   const np = process.execPath
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecFileSyncOptions = {
