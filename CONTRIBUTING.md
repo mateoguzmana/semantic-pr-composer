@@ -85,10 +85,11 @@ You can now validate the action by referencing `./` in a workflow in your repo (
 ```yaml
 uses: ./
 with:
-  milliseconds: 1000
+  github-token: ${{ secrets.GITHUB_TOKEN }}
+  title-format: 'prefix(ticket): description'
 ```
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
+See the [actions tab](https://github.com/mateoguzmana/semantic-pull-request-prefill/actions) for runs of this action! :rocket:
 
 ## Usage:
 
