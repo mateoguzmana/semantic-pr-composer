@@ -11,15 +11,16 @@ exports.DEFAULTS = void 0;
 exports.DEFAULTS = {
     TITLE_FORMAT: 'prefix(ticket): description',
     PREFIXES: [
-        'feature',
         'feat',
         'fix',
-        'bugfix',
-        'hotfix',
         'chore',
-        'patch',
-        'release',
-        'refactor'
+        'docs',
+        'refactor',
+        'test',
+        'style',
+        'ci',
+        'perf',
+        'build'
     ],
     TICKETS: ['test']
 };
