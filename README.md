@@ -4,7 +4,7 @@
 
 # Semantic Pull Request Prefill
 
-This action will prefill the pull request title and body based on the branch name, which follows a semantic convention.
+This action automatically pre-fills the pull request title and body based on the branch name, which follows a semantic convention.
 
 ## Usage
 
@@ -29,7 +29,6 @@ You can see a [demo pull request](https://github.com/mateoguzmana/semantic-pull-
 
 ![image](https://user-images.githubusercontent.com/20783123/226745402-14f12b89-14a6-4aab-879b-d1739a99365c.png)
 
-
 ---
 
 ## Options
@@ -46,7 +45,7 @@ You can see a [demo pull request](https://github.com/mateoguzmana/semantic-pull-
 
 ### Title Format
 
-The title format is used to determine how to format the pull request title.
+Used to determine how to format the pull request title.
 
 The title format is a string that can contain the following placeholders:
 
@@ -67,7 +66,7 @@ The default title format is based on [conventional commits](https://www.conventi
 
 ### Project Base URL
 
-The project base URL is used to determine the base URL for the project/task/ticket system.
+Used to determine the base URL for the project/task/ticket system.
 
 Example:
 
@@ -80,7 +79,7 @@ Example:
 
 ### Template Type
 
-The template type is used to determine which template to use for the pull request title and body.
+Used to determine which template to use for the pull request title and body.
 
 Choose one of the following template types:
 
@@ -90,7 +89,7 @@ Choose one of the following template types:
 
 ### Custom Template
 
-Custom templates can be used to customize the pull request title and body.
+Can be used to customize the pull request title and body.
 
 The template is a string that can contain the following placeholders:
 
@@ -127,7 +126,7 @@ _**Note**: Currently, the custom template will only replace the values above. If
 
 ### Prefixes
 
-The prefixes are used to determine which prefix to use for the pull request title and body.
+Used to determine which prefix to use for the pull request title and body.
 
 The prefixes are an array of strings. Default prefixes are:
 
@@ -157,7 +156,7 @@ You can pass them as an array of strings:
 
 ### Tickets
 
-The tickets are used to determine which ticket to use for the pull request title and body.
+Used to determine which ticket to use for the pull request title and body.
 
 The tickets are an array of strings. Default tickets are:
 
