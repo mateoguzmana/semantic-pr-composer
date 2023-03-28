@@ -109,7 +109,7 @@ function run() {
             const descriptionBody = yield (0, completion_1.completions)({
                 apiKey: chatGPTToken,
                 prompt: description,
-                prefix,
+                prefix
             });
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
             const pullRequestTitle = (0, title_1.formatTitle)({

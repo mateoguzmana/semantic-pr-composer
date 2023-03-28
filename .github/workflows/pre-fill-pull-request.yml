@@ -30,26 +30,26 @@ jobs:
           project-base-url: 'https://trello.com/c/SMTbdsor'
           template-type: 'conventional'
           title-format: 'prefix(ticket): description'
-          custom-template: >
-            ### Description
+          # custom-template: >
+          #   ### Description
 
-            [ticket](projectBaseUrl/ticket)
+          #   [ticket](projectBaseUrl/ticket)
 
-            ### Amazing changes
+          #   ### Amazing changes
 
-            prefix
+          #   prefix
 
-            ### Description
+          #   ### Description
 
-            description
+          #   description
 
-            ### Checklist
+          #   ### Checklist
 
-            - [ ] I have added/updated unit tests
+          #   - [ ] I have added/updated unit tests
 
-            - [ ] I have added/updated documentation
+          #   - [ ] I have added/updated documentation
 
-            - [ ] I have updated the [CHANGELOG.md](./CHANGELOG.md) file
+          #   - [ ] I have updated the [CHANGELOG.md](./CHANGELOG.md) file
           prefixes: |
             ["feat", "fix", "chore", "docs", "refactor", "test", "style", "ci", "perf", "build"]
           tickets: |
