@@ -31,7 +31,7 @@ export async function completions({
     prompt,
     model: 'text-davinci-003',
     temperature: 0,
-    max_tokens: 100,
+    max_tokens: 50,
     n: 1
   })
 

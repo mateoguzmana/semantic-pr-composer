@@ -53,10 +53,10 @@ async function run(): Promise<void> {
 
     const {prefix, ticket, title} = match.groups
 
-    const descriptionBody = title.replace(/-/g, ' ')
-    const description = await completions({
+    const description = title.replace(/-/g, ' ')
+    const descriptionBody = await completions({
       apiKey: chatGPTToken,
-      prompt: descriptionBody
+      prompt: description
     })
 
     const formattedTicket = ticket ? ticket.toUpperCase() : undefined
@@ -72,7 +72,7 @@ async function run(): Promise<void> {
       prefix,
       ticket: formattedTicket,
       projectBaseUrl,
-      description,
+      description: descriptionBody,
       type: customTemplate
         ? TemplateType.Custom
         : (templateType as TemplateType),

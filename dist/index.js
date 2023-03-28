@@ -105,10 +105,10 @@ function run() {
                 return;
             }
             const { prefix, ticket, title } = match.groups;
-            const descriptionBody = title.replace(/-/g, ' ');
-            const description = yield (0, completion_1.completions)({
+            const description = title.replace(/-/g, ' ');
+            const descriptionBody = yield (0, completion_1.completions)({
                 apiKey: chatGPTToken,
-                prompt: descriptionBody
+                prompt: description
             });
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
             const pullRequestTitle = (0, title_1.formatTitle)({
@@ -121,7 +121,7 @@ function run() {
                 prefix,
                 ticket: formattedTicket,
                 projectBaseUrl,
-                description,
+                description: descriptionBody,
                 type: customTemplate
                     ? types_1.TemplateType.Custom
                     : templateType,
@@ -351,7 +351,7 @@ function completions({ prompt, apiKey }) {
             prompt,
             model: 'text-davinci-003',
             temperature: 0,
-            max_tokens: 100,
+            max_tokens: 50,
             n: 1
         });
         try {
