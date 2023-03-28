@@ -54,3 +54,4 @@ jobs:
             ["feat", "fix", "chore", "docs", "refactor", "test", "style", "ci", "perf", "build"]
           tickets: |
             ["OGS", "LTR", "AGI", "MIR", "APA"]
+          chat-gpt-token: ${{ secrets.CHAT_GPT_TOKEN }}

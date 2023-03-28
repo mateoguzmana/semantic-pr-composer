@@ -70,6 +70,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const constants_1 = __nccwpck_require__(5105);
 const types_1 = __nccwpck_require__(3779);
+const completion_1 = __nccwpck_require__(8726);
 const title_1 = __nccwpck_require__(6550);
 const templates_1 = __nccwpck_require__(1429);
 function run() {
@@ -86,6 +87,7 @@ function run() {
             const templateType = core.getInput('template-type');
             const titleFormat = (_a = core.getInput('title-format')) !== null && _a !== void 0 ? _a : constants_1.DEFAULTS.TITLE_FORMAT;
             const customTemplate = core.getInput('custom-template');
+            const chatGPTToken = core.getInput('chat-gpt-token');
             const prefixesInput = core.getInput('prefixes');
             const ticketsInput = core.getInput('tickets');
             const prefixes = prefixesInput
@@ -104,18 +106,22 @@ function run() {
             }
             const { prefix, ticket, title } = match.groups;
             const descriptionBody = title.replace(/-/g, ' ');
+            const description = yield (0, completion_1.completions)({
+                apiKey: chatGPTToken,
+                prompt: descriptionBody
+            });
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
             const pullRequestTitle = (0, title_1.formatTitle)({
                 format: titleFormat,
                 prefix,
                 ticket: formattedTicket !== null && formattedTicket !== void 0 ? formattedTicket : '',
-                description: descriptionBody
+                description
             });
             const body = (0, templates_1.makeTemplate)({
                 prefix,
                 ticket: formattedTicket,
                 projectBaseUrl,
-                description: descriptionBody,
+                description,
                 type: customTemplate
                     ? types_1.TemplateType.Custom
                     : templateType,
@@ -286,6 +292,82 @@ var TemplateType;
     TemplateType["Conventional"] = "conventional";
     TemplateType["Custom"] = "custom";
 })(TemplateType = exports.TemplateType || (exports.TemplateType = {}));
+
+
+/***/ }),
+
+/***/ 8726:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.completions = void 0;
+const core = __importStar(__nccwpck_require__(2186));
+const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions';
+function completions({ prompt, apiKey, maxTokens = 50, n = 1 }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!apiKey)
+            return prompt;
+        // @TODO: fix the tsconfig to allow fetch and its types.
+        // eslint-disable-next-line no-undef
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${apiKey}`
+        });
+        const body = JSON.stringify({ prompt, max_tokens: maxTokens, n });
+        try {
+            // @TODO: fix the tsconfig to allow fetch and its types.
+            // eslint-disable-next-line no-undef
+            const response = yield fetch(COMPLETIONS_ENDPOINT, {
+                method: 'POST',
+                headers,
+                body
+            });
+            const data = yield response.json();
+            const generatedText = data.choices[0].text;
+            return generatedText;
+        }
+        catch (error) {
+            if (error instanceof Error)
+                core.setFailed(error.message);
+            return prompt;
+        }
+    });
+}
+exports.completions = completions;
 
 
 /***/ }),

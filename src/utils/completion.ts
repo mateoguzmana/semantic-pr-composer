@@ -1,9 +1,22 @@
-export async function generateText(
-  prompt: string,
-  apiKey: string,
+import * as core from '@actions/core'
+
+const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions'
+
+interface CompletionsParams {
+  prompt: string
+  apiKey?: string
+  maxTokens?: number
+  n?: number
+}
+
+export async function completions({
+  prompt,
+  apiKey,
   maxTokens = 50,
   n = 1
-): Promise<string> {
+}: CompletionsParams): Promise<string> {
+  if (!apiKey) return prompt
+
   // @TODO: fix the tsconfig to allow fetch and its types.
   // eslint-disable-next-line no-undef
   const headers = new Headers({
@@ -16,7 +29,7 @@ export async function generateText(
   try {
     // @TODO: fix the tsconfig to allow fetch and its types.
     // eslint-disable-next-line no-undef
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch(COMPLETIONS_ENDPOINT, {
       method: 'POST',
       headers,
       body
@@ -28,6 +41,8 @@ export async function generateText(
 
     return generatedText
   } catch (error) {
-    throw new Error('Failed to generate text.')
+    if (error instanceof Error) core.setFailed(error.message)
+
+    return prompt
   }
 }
