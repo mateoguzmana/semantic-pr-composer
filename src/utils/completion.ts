@@ -28,7 +28,7 @@ export async function completions({
   })
 
   const body = JSON.stringify({
-    prompt,
+    prompt: `This pull requests aims to ${prompt}`,
     model: 'text-davinci-003',
     temperature: 0,
     max_tokens: 50,
