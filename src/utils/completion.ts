@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import fetch, {Headers} from 'node-fetch'
+import fetch, {Headers} from 'cross-fetch'
 
 const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions'
 
