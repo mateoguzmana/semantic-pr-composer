@@ -25,7 +25,7 @@ jobs:
           project-base-url: 'https://<yourprojectdomain>/issues'
 ```
 
-You can see a [demo pull request](https://github.com/mateoguzmana/semantic-pull-request-prefill/pull/42), and its result below:
+You can see a [demo pull request](https://github.com/mateoguzmana/semantic-pull-request-prefill/pull/51), and its result below:
 
 <img width="874" alt="image" src="https://user-images.githubusercontent.com/20783123/228375459-9d31620d-76ee-42ac-9dfd-d509eb800f5e.png">
 
