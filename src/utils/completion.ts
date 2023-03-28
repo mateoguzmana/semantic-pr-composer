@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import fetch, {Headers} from 'node-fetch'
 
 const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions'
 
@@ -9,6 +10,14 @@ interface CompletionsParams {
   n?: number
 }
 
+interface Choice {
+  text: string
+}
+
+interface CompletionsResponse {
+  choices: Choice[]
+}
+
 export async function completions({
   prompt,
   apiKey,
@@ -17,8 +26,6 @@ export async function completions({
 }: CompletionsParams): Promise<string> {
   if (!apiKey) return prompt
 
-  // @TODO: fix the tsconfig to allow fetch and its types.
-  // eslint-disable-next-line no-undef
   const headers = new Headers({
     'Content-Type': 'application/json',
     Authorization: `Bearer ${apiKey}`
@@ -27,8 +34,6 @@ export async function completions({
   const body = JSON.stringify({prompt, max_tokens: maxTokens, n})
 
   try {
-    // @TODO: fix the tsconfig to allow fetch and its types.
-    // eslint-disable-next-line no-undef
     const response = await fetch(COMPLETIONS_ENDPOINT, {
       method: 'POST',
       headers,
@@ -37,7 +42,7 @@ export async function completions({
 
     const data = await response.json()
 
-    const generatedText = data.choices[0].text
+    const generatedText = (data as CompletionsResponse).choices[0].text
 
     return generatedText
   } catch (error) {
