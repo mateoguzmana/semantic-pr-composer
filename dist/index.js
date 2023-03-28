@@ -348,7 +348,7 @@ function completions({ prompt, apiKey }) {
             Authorization: `Bearer ${apiKey}`
         });
         const body = JSON.stringify({
-            prompt,
+            prompt: `Pull request purpose: ${prompt}`,
             model: 'text-davinci-003',
             temperature: 0,
             max_tokens: 5,
