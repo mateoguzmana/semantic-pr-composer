@@ -28,11 +28,11 @@ export async function completions({
   })
 
   const body = JSON.stringify({
-    prompt: `Pull request purpose: ${prompt}`,
+    prompt,
     model: 'text-davinci-003',
     temperature: 0,
-    max_tokens: 5,
-    n: 5
+    max_tokens: 100,
+    n: 1
   })
 
   try {

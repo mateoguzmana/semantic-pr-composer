@@ -348,11 +348,11 @@ function completions({ prompt, apiKey }) {
             Authorization: `Bearer ${apiKey}`
         });
         const body = JSON.stringify({
-            prompt: `Pull request purpose: ${prompt}`,
+            prompt,
             model: 'text-davinci-003',
             temperature: 0,
-            max_tokens: 5,
-            n: 5
+            max_tokens: 100,
+            n: 1
         });
         try {
             const response = yield (0, cross_fetch_1.default)(COMPLETIONS_ENDPOINT, {
