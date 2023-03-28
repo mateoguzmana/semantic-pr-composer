@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {DEFAULTS} from './constants'
 import {TemplateType} from './templates/types'
+import {completions} from './utils/completion'
 import {formatTitle} from './utils/title'
 import {makeTemplate} from './templates'
 
@@ -20,6 +21,7 @@ async function run(): Promise<void> {
     const templateType = core.getInput('template-type')
     const titleFormat = core.getInput('title-format') ?? DEFAULTS.TITLE_FORMAT
     const customTemplate = core.getInput('custom-template')
+    const chatGPTToken = core.getInput('chat-gpt-token')
 
     const prefixesInput = core.getInput('prefixes')
     const ticketsInput = core.getInput('tickets')
@@ -51,14 +53,20 @@ async function run(): Promise<void> {
 
     const {prefix, ticket, title} = match.groups
 
-    const descriptionBody = title.replace(/-/g, ' ')
+    const description = title.replace(/-/g, ' ')
+    const descriptionBody = await completions({
+      apiKey: chatGPTToken,
+      prompt: description,
+      prefix
+    })
+
     const formattedTicket = ticket ? ticket.toUpperCase() : undefined
 
     const pullRequestTitle = formatTitle({
       format: titleFormat,
       prefix,
       ticket: formattedTicket ?? '',
-      description: descriptionBody
+      description
     })
 
     const body = makeTemplate({

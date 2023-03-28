@@ -28,6 +28,9 @@ inputs:
     type: array
     items:
       type: string
+  chat-gpt-token:
+    description: 'ChatGPT token. If set, the action will try to generate a pull request description using ChatGPT.'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'
