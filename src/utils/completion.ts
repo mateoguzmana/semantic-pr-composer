@@ -6,8 +6,6 @@ const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions'
 interface CompletionsParams {
   prompt: string
   apiKey?: string
-  maxTokens?: number
-  n?: number
 }
 
 interface Choice {
@@ -20,9 +18,7 @@ interface CompletionsResponse {
 
 export async function completions({
   prompt,
-  apiKey,
-  maxTokens = 50,
-  n = 1
+  apiKey
 }: CompletionsParams): Promise<string> {
   if (!apiKey) return prompt
 
@@ -31,7 +27,13 @@ export async function completions({
     Authorization: `Bearer ${apiKey}`
   })
 
-  const body = JSON.stringify({prompt, max_tokens: maxTokens, n})
+  const body = JSON.stringify({
+    prompt,
+    model: 'text-davinci-003',
+    temperature: 0,
+    max_tokens: 5,
+    n: 1
+  })
 
   try {
     const response = await fetch(COMPLETIONS_ENDPOINT, {

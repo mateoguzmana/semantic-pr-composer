@@ -338,7 +338,7 @@ exports.completions = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const cross_fetch_1 = __importStar(__nccwpck_require__(9805));
 const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions';
-function completions({ prompt, apiKey, maxTokens = 50, n = 1 }) {
+function completions({ prompt, apiKey }) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         if (!apiKey)
@@ -347,7 +347,13 @@ function completions({ prompt, apiKey, maxTokens = 50, n = 1 }) {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${apiKey}`
         });
-        const body = JSON.stringify({ prompt, max_tokens: maxTokens, n });
+        const body = JSON.stringify({
+            prompt,
+            model: 'text-davinci-003',
+            temperature: 0,
+            max_tokens: 5,
+            n: 1
+        });
         try {
             const response = yield (0, cross_fetch_1.default)(COMPLETIONS_ENDPOINT, {
                 method: 'POST',
