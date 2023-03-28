@@ -339,6 +339,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const cross_fetch_1 = __importStar(__nccwpck_require__(9805));
 const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions';
 function completions({ prompt, apiKey, maxTokens = 50, n = 1 }) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         if (!apiKey)
             return prompt;
@@ -354,7 +355,9 @@ function completions({ prompt, apiKey, maxTokens = 50, n = 1 }) {
                 body
             });
             const data = yield response.json();
-            const generatedText = data.choices[0].text;
+            // eslint-disable-next-line no-console
+            console.log({ data });
+            const generatedText = (_b = (_a = data.choices) === null || _a === void 0 ? void 0 : _a[0].text) !== null && _b !== void 0 ? _b : '';
             return generatedText;
         }
         catch (error) {

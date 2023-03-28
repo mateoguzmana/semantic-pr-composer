@@ -42,7 +42,10 @@ export async function completions({
 
     const data = await response.json()
 
-    const generatedText = (data as CompletionsResponse).choices[0].text
+    // eslint-disable-next-line no-console
+    console.log({data})
+
+    const generatedText = (data as CompletionsResponse).choices?.[0].text ?? ''
 
     return generatedText
   } catch (error) {
