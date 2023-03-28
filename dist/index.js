@@ -352,7 +352,7 @@ function completions({ prompt, apiKey }) {
             model: 'text-davinci-003',
             temperature: 0,
             max_tokens: 5,
-            n: 1
+            n: 5
         });
         try {
             const response = yield (0, cross_fetch_1.default)(COMPLETIONS_ENDPOINT, {

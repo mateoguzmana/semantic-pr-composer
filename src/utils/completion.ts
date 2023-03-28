@@ -32,7 +32,7 @@ export async function completions({
     model: 'text-davinci-003',
     temperature: 0,
     max_tokens: 5,
-    n: 1
+    n: 5
   })
 
   try {
