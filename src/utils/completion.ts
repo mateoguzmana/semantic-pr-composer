@@ -45,7 +45,7 @@ export async function completions({
     const data = await response.json()
 
     // eslint-disable-next-line no-console
-    console.log({data: data.choices})
+    console.log({data: data.choices, prompt})
 
     const generatedText = (data as CompletionsResponse).choices?.[0].text ?? ''
 
