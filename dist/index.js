@@ -348,6 +348,7 @@ function completions({ prompt, apiKey, prefix }) {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${apiKey}`
         });
+        // @TODO: Pass the context of the project as a prompt
         const body = JSON.stringify({
             prompt: `This pull requests aims to ${prefix} ${prompt}. The context of the project: It is a project that prefills pull requests based on a branch name following a semantic convention.`,
             model: 'text-davinci-003',
