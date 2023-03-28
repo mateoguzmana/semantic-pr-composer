@@ -362,7 +362,7 @@ function completions({ prompt, apiKey }) {
             });
             const data = yield response.json();
             // eslint-disable-next-line no-console
-            console.log({ data });
+            console.log({ data: data.choices });
             const generatedText = (_b = (_a = data.choices) === null || _a === void 0 ? void 0 : _a[0].text) !== null && _b !== void 0 ? _b : '';
             return generatedText;
         }
