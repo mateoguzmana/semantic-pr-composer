@@ -56,7 +56,8 @@ async function run(): Promise<void> {
     const description = title.replace(/-/g, ' ')
     const descriptionBody = await completions({
       apiKey: chatGPTToken,
-      prompt: description
+      prompt: description,
+      prefix
     })
 
     const formattedTicket = ticket ? ticket.toUpperCase() : undefined

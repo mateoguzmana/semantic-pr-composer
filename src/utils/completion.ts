@@ -6,6 +6,7 @@ const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions'
 interface CompletionsParams {
   prompt: string
   apiKey?: string
+  prefix?: string
 }
 
 interface Choice {
@@ -18,7 +19,8 @@ interface CompletionsResponse {
 
 export async function completions({
   prompt,
-  apiKey
+  apiKey,
+  prefix
 }: CompletionsParams): Promise<string> {
   if (!apiKey) return prompt
 
@@ -28,7 +30,7 @@ export async function completions({
   })
 
   const body = JSON.stringify({
-    prompt: `This pull requests aims to ${prompt}`,
+    prompt: `This pull requests aims to ${prefix} ${prompt}. The context of the project: It is a project that prefills pull requests based on a branch name following a semantic convention.`,
     model: 'text-davinci-003',
     temperature: 0,
     max_tokens: 50,

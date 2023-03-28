@@ -108,7 +108,8 @@ function run() {
             const description = title.replace(/-/g, ' ');
             const descriptionBody = yield (0, completion_1.completions)({
                 apiKey: chatGPTToken,
-                prompt: description
+                prompt: description,
+                prefix,
             });
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
             const pullRequestTitle = (0, title_1.formatTitle)({
@@ -338,7 +339,7 @@ exports.completions = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const cross_fetch_1 = __importStar(__nccwpck_require__(9805));
 const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions';
-function completions({ prompt, apiKey }) {
+function completions({ prompt, apiKey, prefix }) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         if (!apiKey)
@@ -348,7 +349,7 @@ function completions({ prompt, apiKey }) {
             Authorization: `Bearer ${apiKey}`
         });
         const body = JSON.stringify({
-            prompt: `This pull requests aims to ${prompt}`,
+            prompt: `This pull requests aims to ${prefix} ${prompt}. The context of the project: It is a project that prefills pull requests based on a branch name following a semantic convention.`,
             model: 'text-davinci-003',
             temperature: 0,
             max_tokens: 50,
