@@ -55,3 +55,4 @@ jobs:
           tickets: |
             ["OGS", "LTR", "AGI", "MIR", "APA"]
           chat-gpt-token: ${{ secrets.CHAT_GPT_TOKEN }}
+          project-context: 'The context of the project: It is a project that prefills pull requests based on a branch name following a semantic convention.'

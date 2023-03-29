@@ -7,6 +7,7 @@ interface CompletionsParams {
   prompt: string
   apiKey?: string
   prefix?: string
+  projectContext?: string
 }
 
 interface Choice {
@@ -20,7 +21,8 @@ interface CompletionsResponse {
 export async function completions({
   prompt,
   apiKey,
-  prefix
+  prefix,
+  projectContext
 }: CompletionsParams): Promise<string> {
   if (!apiKey) return prompt
 
@@ -29,9 +31,10 @@ export async function completions({
     Authorization: `Bearer ${apiKey}`
   })
 
-  // @TODO: Pass the context of the project as a prompt
+  const promptWithContext = `This pull requests aims to ${prefix} ${prompt}. ${projectContext}}`
+
   const body = JSON.stringify({
-    prompt: `This pull requests aims to ${prefix} ${prompt}. The context of the project: It is a project that prefills pull requests based on a branch name following a semantic convention.`,
+    prompt: promptWithContext,
     model: 'text-davinci-003',
     temperature: 0,
     max_tokens: 50,
@@ -46,9 +49,6 @@ export async function completions({
     })
 
     const data = await response.json()
-
-    // eslint-disable-next-line no-console
-    console.log({data: data.choices, prompt})
 
     const generatedText = (data as CompletionsResponse).choices?.[0].text ?? ''
 
