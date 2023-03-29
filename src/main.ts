@@ -22,6 +22,7 @@ async function run(): Promise<void> {
     const titleFormat = core.getInput('title-format') ?? DEFAULTS.TITLE_FORMAT
     const customTemplate = core.getInput('custom-template')
     const chatGPTToken = core.getInput('chat-gpt-token')
+    const projectContext = core.getInput('project-context')
 
     const prefixesInput = core.getInput('prefixes')
     const ticketsInput = core.getInput('tickets')
@@ -57,7 +58,8 @@ async function run(): Promise<void> {
     const descriptionBody = await completions({
       apiKey: chatGPTToken,
       prompt: description,
-      prefix
+      prefix,
+      projectContext
     })
 
     const formattedTicket = ticket ? ticket.toUpperCase() : undefined

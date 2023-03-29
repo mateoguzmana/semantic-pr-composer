@@ -88,6 +88,7 @@ function run() {
             const titleFormat = (_a = core.getInput('title-format')) !== null && _a !== void 0 ? _a : constants_1.DEFAULTS.TITLE_FORMAT;
             const customTemplate = core.getInput('custom-template');
             const chatGPTToken = core.getInput('chat-gpt-token');
+            const projectContext = core.getInput('project-context');
             const prefixesInput = core.getInput('prefixes');
             const ticketsInput = core.getInput('tickets');
             const prefixes = prefixesInput
@@ -109,7 +110,8 @@ function run() {
             const descriptionBody = yield (0, completion_1.completions)({
                 apiKey: chatGPTToken,
                 prompt: description,
-                prefix
+                prefix,
+                projectContext
             });
             const formattedTicket = ticket ? ticket.toUpperCase() : undefined;
             const pullRequestTitle = (0, title_1.formatTitle)({
@@ -339,7 +341,7 @@ exports.completions = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const cross_fetch_1 = __importStar(__nccwpck_require__(9805));
 const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions';
-function completions({ prompt, apiKey, prefix }) {
+function completions({ prompt, apiKey, prefix, projectContext }) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         if (!apiKey)
@@ -348,9 +350,9 @@ function completions({ prompt, apiKey, prefix }) {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${apiKey}`
         });
-        // @TODO: Pass the context of the project as a prompt
+        const promptWithContext = `This pull requests aims to ${prefix} ${prompt}. ${projectContext}}`;
         const body = JSON.stringify({
-            prompt: `This pull requests aims to ${prefix} ${prompt}. The context of the project: It is a project that prefills pull requests based on a branch name following a semantic convention.`,
+            prompt: promptWithContext,
             model: 'text-davinci-003',
             temperature: 0,
             max_tokens: 50,
@@ -363,8 +365,6 @@ function completions({ prompt, apiKey, prefix }) {
                 body
             });
             const data = yield response.json();
-            // eslint-disable-next-line no-console
-            console.log({ data: data.choices, prompt });
             const generatedText = (_b = (_a = data.choices) === null || _a === void 0 ? void 0 : _a[0].text) !== null && _b !== void 0 ? _b : '';
             return generatedText;
         }

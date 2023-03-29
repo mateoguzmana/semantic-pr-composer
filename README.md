@@ -33,16 +33,17 @@ You can see a [demo pull request](https://github.com/mateoguzmana/semantic-pull-
 
 ## Options
 
-| Option                                  | Description                                 | Default                         |
-| --------------------------------------- | ------------------------------------------- | ------------------------------- |
-| `github-token`                          | GitHub token to use for the API calls.      | `${{ secrets.GITHUB_TOKEN }}`   |
-| [`title-format`](#title-format)         | The title format to use                     | `'prefix(ticket): description'` |
-| [`project-base-url`](#project-base-url) | Base URL for the project/task/ticket system | `'https://example.com'`         |
-| [`template-type`](#template-type)       | The template type to use                    | `'basic'`                       |
-| [`custom-template`](#custom-template)   | If set, `template-type` is ignored          |                                 |
-| [`prefixes`](#prefixes)                 | The prefixes to use                         | [Default prefixes](#prefixes)   |
-| [`tickets`](#tickets)                   | The tickets to use                          | [Default tickets](#tickets)     |
-| `chat-gpt-token`                        | See [ChatGPT Token](#chatgpt-token)         |                                 |
+| Option                                  | Description                                     | Default                         |
+| --------------------------------------- | ----------------------------------------------- | ------------------------------- |
+| `github-token`                          | GitHub token to use for the API calls.          | `${{ secrets.GITHUB_TOKEN }}`   |
+| [`title-format`](#title-format)         | The title format to use                         | `'prefix(ticket): description'` |
+| [`project-base-url`](#project-base-url) | Base URL for the project/task/ticket system     | `'https://example.com'`         |
+| [`template-type`](#template-type)       | The template type to use                        | `'basic'`                       |
+| [`custom-template`](#custom-template)   | If set, `template-type` is ignored              |                                 |
+| [`prefixes`](#prefixes)                 | The prefixes to use                             | [Default prefixes](#prefixes)   |
+| [`tickets`](#tickets)                   | The tickets to use                              | [Default tickets](#tickets)     |
+| [`chat-gpt-token`](#chatgpt-token)      | See [ChatGPT Token](#chatgpt-token)             |                                 |
+| `project-context`                       | Project context. Used for the AI autocompletion |                                 |
 
 ### Title Format
 

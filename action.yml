@@ -31,6 +31,9 @@ inputs:
   chat-gpt-token:
     description: 'ChatGPT token. If set, the action will try to generate a pull request description using ChatGPT.'
     required: false
+  project-context:
+    description: 'Project context. Used for the AI autocompletion.'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'
