@@ -34,9 +34,6 @@ async function run(): Promise<void> {
 
     const branch = GITHUB_HEAD_REF
 
-    const context = github.context
-    const octokit = github.getOctokit(token)
-
     const prefixesOptions = prefixes.join('|')
     const ticketsOptions = tickets.join('|')
 
@@ -83,6 +80,9 @@ async function run(): Promise<void> {
     })
 
     if (github.context.payload.pull_request?.number) {
+      const context = github.context
+      const octokit = github.getOctokit(token)
+
       await octokit.rest.pulls.update({
         ...context.repo,
         pull_number: github.context.payload.pull_request.number,
