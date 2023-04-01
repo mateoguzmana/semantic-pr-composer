@@ -415,11 +415,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.formatTitle = void 0;
 function formatTitle(options) {
     const { format } = options, params = __rest(options, ["format"]);
-    let output = format;
+    let output_test = format;
     for (const key in params) {
-        output = output.replace(key, params[key]);
+        output_test = output_test.replace(key, params[key]);
     }
-    return output;
+    return output_test;
 }
 exports.formatTitle = formatTitle;
 

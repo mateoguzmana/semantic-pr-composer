@@ -5,11 +5,11 @@ interface Options {
 
 export function formatTitle(options: Options): string {
   const {format, ...params} = options
-  let output = format
+  let output_test = format
 
   for (const key in params) {
-    output = output.replace(key, params[key])
+    output_test = output_test.replace(key, params[key])
   }
 
-  return output
+  return output_test
 }
