@@ -21,7 +21,7 @@ async function run(): Promise<void> {
     const templateType = core.getInput('template-type')
     const titleFormat = core.getInput('title-format') ?? DEFAULTS.TITLE_FORMAT
     const customTemplate = core.getInput('custom-template')
-    const chatGPTToken = core.getInput('chat-gpt-token')
+    const openAIToken = core.getInput('openai-token')
     const projectContext = core.getInput('project-context')
 
     const prefixesInput = core.getInput('prefixes')
@@ -53,7 +53,7 @@ async function run(): Promise<void> {
 
     const description = title.replace(/-/g, ' ')
     const descriptionBody = await completions({
-      apiKey: chatGPTToken,
+      apiKey: openAIToken,
       prompt: description,
       prefix,
       projectContext

@@ -87,7 +87,7 @@ function run() {
             const templateType = core.getInput('template-type');
             const titleFormat = (_a = core.getInput('title-format')) !== null && _a !== void 0 ? _a : constants_1.DEFAULTS.TITLE_FORMAT;
             const customTemplate = core.getInput('custom-template');
-            const chatGPTToken = core.getInput('chat-gpt-token');
+            const openAIToken = core.getInput('openai-token');
             const projectContext = core.getInput('project-context');
             const prefixesInput = core.getInput('prefixes');
             const ticketsInput = core.getInput('tickets');
@@ -106,7 +106,7 @@ function run() {
             const { prefix, ticket, title } = match.groups;
             const description = title.replace(/-/g, ' ');
             const descriptionBody = yield (0, completion_1.completions)({
-                apiKey: chatGPTToken,
+                apiKey: openAIToken,
                 prompt: description,
                 prefix,
                 projectContext
