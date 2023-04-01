@@ -1,6 +1,6 @@
 {
   "name": "semantic-pr-composer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Compose a pull request description and title based on a semantic branch name",
   "main": "lib/main.js",
