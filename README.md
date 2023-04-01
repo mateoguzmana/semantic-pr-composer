@@ -1,23 +1,43 @@
 <p align="center">
-  <a href="https://github.com/mateoguzmana/semantic-pull-request-prefill/actions"><img alt="semantic-pull-request-prefill status" src="https://github.com/mateoguzmana/semantic-pull-request-prefill/workflows/build-test/badge.svg"></a>
+  <a href="https://github.com/mateoguzmana/semantic-pr-composer/actions"><img alt="semantic-pr-composer status" src="https://github.com/mateoguzmana/semantic-pr-composer/workflows/build-test/badge.svg"></a>
 </p>
 
-# Semantic Pull Request Prefill
+# Semantic Pull Request Composer
 
-This action automatically pre-fills the pull request title and body based on the branch name, which follows a semantic convention.
+This action automatically composes the pull request title and body based on the branch name, which follows a semantic convention. Optional AI autocompletion using ChatGPT is also available.
+
+## Inspiration
+
+Development teams often use a convention to name their branches. For example, they might use a prefix to indicate the type of change, and a ticket number to indicate the ticket that the change is related to.
+
+For example, a branch name might look like this:
+
+```
+feat/TEAM-1234-add-new-feature
+```
+
+This action automatically composes the pull request title and body based on the branch name, which follows a semantic convention.
+
+## Features
+
+- Automatically compose the pull request title and body based on the branch name
+- Optional AI autocompletion using ChatGPT
+- Supports custom prefixes and tickets
+- Supports custom project base URL
+- Supports custom templates (partially done, more improvements for advanced templates coming soon)
 
 ## Usage
 
 ```yaml
-name: Semantic Pull Request Prefill
+name: Semantic Pull Request Composer
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
 jobs:
-  prefill:
+  pr-compose:
     runs-on: ubuntu-latest
     steps:
-      - uses: mateoguzmana/semantic-pull-request-prefill@v1
+      - uses: mateoguzmana/semantic-pr-composer@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           title-format: 'prefix(ticket): description'
@@ -25,7 +45,7 @@ jobs:
           project-base-url: 'https://<yourprojectdomain>/issues'
 ```
 
-You can see a [demo pull request](https://github.com/mateoguzmana/semantic-pull-request-prefill/pull/51), and its result below:
+You can see a [demo pull request](https://github.com/mateoguzmana/semantic-pr-composer/pull/51), and its result below:
 
 <img width="874" alt="image" src="https://user-images.githubusercontent.com/20783123/228375459-9d31620d-76ee-42ac-9dfd-d509eb800f5e.png">
 
@@ -58,7 +78,7 @@ The title format is a string that can contain the following placeholders:
 Example:
 
 ```yaml
-- uses: mateoguzmana/semantic-pull-request-prefill@v1
+- uses: mateoguzmana/semantic-pr-composer@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
     title-format: 'prefix(ticket): description'
@@ -73,7 +93,7 @@ Used to determine the base URL for the project/task/ticket system.
 Example:
 
 ```yaml
-- uses: mateoguzmana/semantic-pull-request-prefill@v1
+- uses: mateoguzmana/semantic-pr-composer@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
     project-base-url: 'https://<yourprojectdomain>/issues'
@@ -149,7 +169,7 @@ The prefixes are an array of strings. Default prefixes are:
 You can pass them as an array of strings:
 
 ```yaml
-- uses: mateoguzmana/semantic-pull-request-prefill@v1
+- uses: mateoguzmana/semantic-pr-composer@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
     prefixes: |
@@ -167,7 +187,7 @@ The tickets are an array of strings. Default tickets are:
 You can pass them as an array of strings:
 
 ```yaml
-- uses: mateoguzmana/semantic-pull-request-prefill@v1
+- uses: mateoguzmana/semantic-pr-composer@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
     tickets: |

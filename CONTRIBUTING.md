@@ -89,7 +89,7 @@ with:
   title-format: 'prefix(ticket): description'
 ```
 
-See the [actions tab](https://github.com/mateoguzmana/semantic-pull-request-prefill/actions) for runs of this action! :rocket:
+See the [actions tab](https://github.com/mateoguzmana/semantic-pr-composer/actions) for runs of this action! :rocket:
 
 ## Usage:
 

@@ -96,8 +96,6 @@ function run() {
                 : constants_1.DEFAULTS.PREFIXES;
             const tickets = ticketsInput ? JSON.parse(ticketsInput) : constants_1.DEFAULTS.TICKETS;
             const branch = GITHUB_HEAD_REF;
-            const context = github.context;
-            const octokit = github.getOctokit(token);
             const prefixesOptions = prefixes.join('|');
             const ticketsOptions = tickets.join('|');
             const match = branch.match(new RegExp(`^(?<prefix>(${prefixesOptions}))\\/((?<ticket>(${ticketsOptions})-[0-9]*)-)?(?<title>.*)$`));
@@ -131,6 +129,8 @@ function run() {
                 customTemplate
             });
             if ((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.number) {
+                const context = github.context;
+                const octokit = github.getOctokit(token);
                 yield octokit.rest.pulls.update(Object.assign(Object.assign({}, context.repo), { pull_number: github.context.payload.pull_request.number, title: pullRequestTitle, body }));
             }
         }
