@@ -344,6 +344,8 @@ const COMPLETIONS_ENDPOINT = 'https://api.openai.com/v1/completions';
 function completions({ prompt, apiKey, prefix, projectContext }) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
+        // eslint-disable-next-line no-console
+        console.log({ hasAPIKey: !!apiKey, prompt, prefix, projectContext });
         if (!apiKey)
             return prompt;
         const headers = new cross_fetch_1.Headers({
@@ -365,6 +367,8 @@ function completions({ prompt, apiKey, prefix, projectContext }) {
                 body
             });
             const data = yield response.json();
+            // eslint-disable-next-line no-console
+            console.log({ data });
             const generatedText = (_b = (_a = data.choices) === null || _a === void 0 ? void 0 : _a[0].text) !== null && _b !== void 0 ? _b : '';
             return generatedText;
         }

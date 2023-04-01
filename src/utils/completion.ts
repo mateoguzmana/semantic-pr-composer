@@ -24,6 +24,9 @@ export async function completions({
   prefix,
   projectContext
 }: CompletionsParams): Promise<string> {
+  // eslint-disable-next-line no-console
+  console.log({hasAPIKey: !!apiKey, prompt, prefix, projectContext})
+
   if (!apiKey) return prompt
 
   const headers = new Headers({
@@ -49,6 +52,9 @@ export async function completions({
     })
 
     const data = await response.json()
+
+    // eslint-disable-next-line no-console
+    console.log({data})
 
     const generatedText = (data as CompletionsResponse).choices?.[0].text ?? ''
 
