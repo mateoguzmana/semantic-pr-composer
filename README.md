@@ -4,7 +4,7 @@
 
 # Semantic Pull Request Composer
 
-This action automatically composes the pull request title and body based on the branch name, which follows a semantic convention. Optional AI autocompletion using ChatGPT is also available.
+This action automatically composes the pull request title and body based on the branch name, which follows a semantic convention. Optional AI autocompletion using OpenAI completions API is also available.
 
 ## Inspiration
 
@@ -21,7 +21,7 @@ This action automatically composes the pull request title and body based on the 
 ## Features
 
 - Automatically compose the pull request title and body based on the branch name
-- Optional AI autocompletion using ChatGPT
+- Optional AI autocompletion using OpenAI
 - Supports custom prefixes and tickets
 - Supports custom project base URL
 - Supports custom templates (partially done, more improvements for advanced templates coming soon)
@@ -62,7 +62,7 @@ You can see a [demo pull request](https://github.com/mateoguzmana/semantic-pr-co
 | [`custom-template`](#custom-template)   | If set, `template-type` is ignored              |                                 |
 | [`prefixes`](#prefixes)                 | The prefixes to use                             | [Default prefixes](#prefixes)   |
 | [`tickets`](#tickets)                   | The tickets to use                              | [Default tickets](#tickets)     |
-| [`chat-gpt-token`](#chatgpt-token)      | See [ChatGPT Token](#chatgpt-token)             |                                 |
+| [`openai-token`](#openai-token)         | See [OpenAI Token](#openai-token)               |                                 |
 | `project-context`                       | Project context. Used for the AI autocompletion |                                 |
 
 ### Title Format
@@ -194,9 +194,9 @@ You can pass them as an array of strings:
       ["test", "test2"]
 ```
 
-### ChatGPT Token
+### OpenAI Token
 
-ChatGPT token. If set, the action will try to generate a pull request description using ChatGPT.
+OpenAI token. If set, the action will try to generate a pull request description using the OpenAI completions API.
 
 **Note**: This is experimental.
 

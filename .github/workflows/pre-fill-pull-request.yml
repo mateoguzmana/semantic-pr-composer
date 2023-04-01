@@ -54,5 +54,5 @@ jobs:
             ["feat", "fix", "chore", "docs", "refactor", "test", "style", "ci", "perf", "build"]
           tickets: |
             ["OGS", "LTR", "AGI", "MIR", "APA"]
-          chat-gpt-token: ${{ secrets.CHAT_GPT_TOKEN }}
+          openai-token: ${{ secrets.OPENAI_TOKEN }}
           project-context: 'The context of the project: It is a project that composes pull requests based on a branch name following a semantic convention.'
